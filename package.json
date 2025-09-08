@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "tsc --incremental -p tests/tsconfig.json",
-    "test": "playwright test -c dist/tests",
+    "test": "playwright test",
     "test:uat": "cross-env ENV=uat npx playwright test",
     "test:rc": "cross-env ENV=rc npx playwright test",
     "test:ci": "HEADLESS=true npx playwright test",
