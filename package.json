@@ -2,7 +2,12 @@
   "name": "playwright_screenplay_pageobject_template",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test --project=chromium",
+    "test:rc": "ENV=rc npx playwright test --project=chromium",
+    "report": "npx playwright show-report",
+    "debug": "npx playwright test --debug --project=chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
