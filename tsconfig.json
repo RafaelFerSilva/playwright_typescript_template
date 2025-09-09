@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                          // Moderno, compatível com Node.js e navegadores atuais
-    "module": "CommonJS",                        // Compatível com Node.js (Playwright roda em Node)
-    "lib": ["ES2020", "DOM"],                    // Suporte a APIs modernas e DOM para testes web
-    "strict": true,                              // Ativa todas as verificações estritas do TS para qualidade
-    "moduleResolution": "node",                  // Resolve módulos no estilo Node.js
-    "esModuleInterop": true,                      // Facilita importações de módulos CommonJS
-    "skipLibCheck": true,                         // Ignora checagem de tipos em libs para acelerar build
-    "forceConsistentCasingInFileNames": true,    // Evita problemas de case sensitivity em sistemas diferentes
-    "types": ["@playwright/test", "node"],       // Tipos essenciais para Playwright e Node.js
-    "outDir": "dist",                             // Saída compilada
-    "rootDir": ".",                               // Raiz do projeto
-    "noImplicitAny": true,                        // Evita any implícito para maior segurança
-    "noUnusedLocals": true,                        // Erros para variáveis locais não usadas
-    "noUnusedParameters": true,                    // Erros para parâmetros não usados
-    "noFallthroughCasesInSwitch": true,           // Evita fallthrough em switch
-    "resolveJsonModule": true,                     // Permite importar JSON como módulo
-    "allowSyntheticDefaultImports": true,         // Permite import default sintético para compatibilidade
-    "incremental": true                            // Compilação incremental para builds mais rápidos
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020", "DOM"],
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["@playwright/test", "node"],
+    "outDir": "dist",
+    "rootDir": "./",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "incremental": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "tests"]
 }
