@@ -11,13 +11,14 @@
     "types": ["@playwright/test", "node"],
     "outDir": "dist",
     "rootDir": "./",
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "incremental": true
+    "baseUrl": ".",
+    "paths": {
+      "@framework/*": ["src/*"],
+      "@pages/*": ["src/adapters/pages/*"],
+      "@utils/*": ["src/utils/*"],
+      "@screenplay/*": ["src/screenplay/*"],
+      "@interfaces/*": ["src/interfaces/*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist", "tests"]

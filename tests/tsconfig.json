@@ -10,7 +10,8 @@
       "@utils/*": ["src/utils/*"],
       "@screenplay/*": ["src/screenplay/*"],
       "@tests/*": ["tests/*"],
-      "@fixtures/*": ["tests/fixtures/*"]
+      "@fixtures/*": ["tests/fixtures/*"],
+      "@interfaces/*": ["src/interfaces/*"]
     }
   },
   "include": [
