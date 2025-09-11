@@ -12,4 +12,6 @@ env.*
 /allure-report
 /allure-results
 venv/
-*.env
+uat.env
+rc.env
+.env
