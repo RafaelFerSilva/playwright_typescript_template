@@ -17,7 +17,8 @@
       "@pages/*": ["src/adapters/pages/*"],
       "@utils/*": ["src/utils/*"],
       "@screenplay/*": ["src/screenplay/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@interfaces/*": ["src/interfaces/*"],
+      "@services/*": ["src/services/*"]
     }
   },
   "include": ["src/**/*.ts"],

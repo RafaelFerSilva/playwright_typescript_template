@@ -11,7 +11,8 @@
       "@screenplay/*": ["src/screenplay/*"],
       "@tests/*": ["tests/*"],
       "@fixtures/*": ["tests/fixtures/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@interfaces/*": ["src/interfaces/*"],
+      "@services/*": ["src/services/*"]
     }
   },
   "include": [
