@@ -1,10 +1,12 @@
-# Playwrright / Typescript Template
+# Playwright / Typescript Template
 
-Nos últimos meses evoluí um projeto de automação de testes end-to-end utilizando **Playwright** com **TypeScript**.
+Ultimamente venho trabalhando em um projeto de automação de testes end-to-end utilizando **Playwright** com **TypeScript**.
+
+O objetivo é um template para automação de testes que sirva como base para projetos escaláveis e reutilizáveis.
 
 Compartilho aqui os passos dessa evolução — desde um setup inicial até a construção de uma arquitetura robusta, baseada em **Ports & Adapters**, que suporta tanto **Page Object Model (POM)** quanto o padrão **Screenplay**.
 
----
+Ao final temos uma explicação detalhada sobre cada componente e sua função no template. O template abrange Screenplay e Page Object Model, o objetivo e deixar a cargo do time escolher qual padrão seguir.
 
 ## Inicializar um projeto
 
@@ -3547,6 +3549,204 @@ DB_PORT=3306
 
 Lembrando que podemos adicionar mais configurações conforme nossa necessidade.
 
-# Conclusão
+---
 
-Aqui demostramos a implementação de testes com Page Object e Screenplay para Front-end, Database e API. Objetivo foi criar um estrutura escalável para servir como exemplo e base para novos projetos de automação. Os projetos que utilizarem este template devem escolher se desejam seguir com page object ou com screenplay conforme a necessidade dos seus times.
+## Estrutura do Projeto
+
+
+    ├── src
+    │   ├── adapters
+    │   │   ├── api
+    │   │   │   └── DemoQAAccountApiAdapter.ts
+    │   │   ├── database
+    │   │   │   ├── DatabaseConnection.ts
+    │   │   │   └── MySQLAdapter.ts
+    │   │   └── pages
+    │   │       └── HomePage.ts
+    │   ├── errors
+    │   │   └── TestErrors.ts
+    │   ├── fixtures
+    │   │   └── dbAdapter.ts
+    │   ├── interfaces
+    │   │   ├── IAbility.ts
+    │   │   ├── IAccountApiPort.ts
+    │   │   ├── IApiError.ts
+    │   │   ├── IDatabaseAdapter.ts
+    │   │   ├── IDbConfig.ts
+    │   │   ├── IQuestion.ts
+    │   │   ├── IQuestionValidationOptions.ts
+    │   │   ├── ITask.ts
+    │   │   └── IUser.ts
+    │   ├── repositories
+    │   │   └── UserRepository.ts
+    │   ├── screenplay
+    │   │   ├── abilities
+    │   │   │   ├── AccessDatabase.ts
+    │   │   │   ├── BrowseTheWeb.ts
+    │   │   │   └── CallAccountService.ts
+    │   │   ├── core
+    │   │   │   └── Actor.ts
+    │   │   ├── questions
+    │   │   │   ├── DoesDataExist.ts
+    │   │   │   ├── IsHeroTitleVisible.ts
+    │   │   │   ├── QueryDatabase.ts
+    │   │   │   └── ServiceValidations.ts
+    │   │   └── tasks
+    │   │       ├── CreateUserViaService.ts
+    │   │       ├── ExecuteSqlScript.ts
+    │   │       ├── ExecuteSqlScriptWithValues.ts
+    │   │       └── NavigateTo.ts
+    │   ├── services
+    │   │   ├── AccountService.ts
+    │   │   └── DbService.ts
+    │   ├── sql
+    │   │   ├── test.sql
+    │   │   └── users_replace.sql
+    │   └── utils
+    │       ├── AllureLogger.ts
+    │       └── AllureStep.ts
+    ├── tests
+    │   ├── global-setup.ts
+    │   ├── global-teardown.ts
+    │   ├── PageObject
+    │   │   ├── account_api.spec.ts
+    │   │   ├── connect_database.spec.ts
+    │   │   └── home.spec.ts
+    │   ├── Screenplay
+    │   │   ├── account_api.spec.ts
+    │   │   ├── connect_database.spec.ts
+    │   │   └── home.spec.ts
+    │   ├── tsconfig.json
+
+
+
+---
+
+### **src/ — Núcleo do framework de testes**
+Aqui está localizado o framework em si, ou seja, toda a infraestrutura, lógica de negócio e suporte que tornam os testes reutilizáveis, independentes e organizados.
+
+Ele traz a separação entre infraestrutura (adapters), contratos (interfaces), serviços, padrões de automação (page objects, screenplay) e utilidades.
+
+---
+
+### **adapters/ — Pontos de integração com sistemas externos**
+Responsável por implementar as “portas” definidas em interfaces, conectando o framework a recursos externos.
+
+---
+
+- **api/**
+  - **DemoQAAccountApiAdapter.ts** → Implementa chamadas reais para a API DemoQA usando Playwright APIRequestContext. É a camada de infraestrutura para serviços HTTP.
+- **database/**
+  - **DatabaseConnection.ts** → Gerencia o ciclo de vida de conexões com o banco, garantindo reuso com Singleton e suporte a múltiplos bancos de dados.
+  - **MySQLAdapter.ts** → Implementação do IDatabaseAdapter, conectando via MySQL, abstraindo queries, execuções de scripts, transações e oferecendo suporte a pooling de conexões para maior eficiência.
+
+- **pages/**
+  - **HomePage.ts**→ Implementa o Page Object Model (POM) para a página Home.
+É a camada que encapsula interação com a interface da aplicação web.
+
+Resumo: os adapters são implementações concretas de integração, mas desacopladas do domínio. Se amanhã fosse necessário mudar de MySQL para PostgreSQL ou trocar a API DemoQA por outra, apenas os adapters mudariam.
+
+---
+
+### **errors/ — Tratamento estruturado de erros**
+  - **TestErrors.ts** → Define erros customizados (ex.: TaskFailedError, DatabaseConnectionError, etc.).
+
+Isso profissionaliza o tratamento de falhas, permitindo relatórios mais claros no Allure e logs mais úteis para debugging.
+
+### **fixtures/ — Injeção de dependências para os testes**
+- **dbAdapter.ts**→ Cria fixtures customizadas do Playwright, injetando instâncias de banco de dados por worker de teste.
+
+Garante que testes possam consumir dependências configuradas sem precisar instanciá-las repetidamente.
+
+### **interfaces/ — Contratos e abstrações**
+Define portas (ports) que devem ser implementadas pelos adapters e consumidas pelos services.
+
+Principais contratos:
+
+- IAbility.ts → Define habilidades do ator no Screenplay.
+- IAccountApiPort.ts → Porta de comunicação com serviços de “Account”.
+- IApiError.ts → Contrato para representar erros de API.
+- IDatabaseAdapter.ts → Porta de acesso a banco de dados.
+- IDbConfig.ts → Estrutura de configuração de conexões.
+- IQuestion.ts, ITask.ts, IQuestionValidationOptions.ts → Contratos básicos do Screenplay.
+- IUser.ts → Representação de entidade de usuário.
+
+Resumo: garantem desacoplamento entre domínio, serviços e infraestrutura.
+
+### **repositories/ — Acesso especializado a entidades**
+  - **UserRepository.ts** → Implementa acesso a entidade Usuário no banco de dados, aplicando regras específicas (CRUD, buscas).
+
+Diferença para o DbService:
+
+- O service DB é genérico (executa qualquer SQL).
+- O repository é especializado e orientado a entidades de domínio.
+
+### **screenplay/** — Implementação do Screenplay Pattern
+
+Promovendo a separação de responsabilidades e reutilização de código.
+
+**abilities/**
+- **BrowseTheWeb.ts** → Permite ao ator navegar no browser.
+- **AccessDatabase.ts**→ Concede habilidade de interagir com bancos via DbService.
+- **CallAccountService.ts** → Dá acesso ao serviço de API do domínio.
+
+**core/**
+- **Actor.ts** → Classe principal do padrão Screenplay.
+  - Permite ao ator executar tarefas (ITask) e responder perguntas (IQuestion), desde que possua as habilidades necessárias (IAbility).
+
+**tasks/**
+- **NavigateTo.ts**→ Navegar para uma URL.
+- **ExecuteSqlScript.ts** e ExecuteSqlScriptWithValues.ts → Executar consultas SQL.
+- **CreateUserViaService.ts** → Criar usuário via serviço de API.
+
+**questions/**
+- **IsHeroTitleVisible.ts**→ Validação na UI via Playwright.
+- **DoesDataExist.ts** → Valida se um dataset retornado do banco contém registros.
+- **QueryDatabase.ts** → Consulta banco de dados.
+- **ServiceValidations.ts** → Validações pós-interação com APIs.
+
+Resumo: traduz o comportamento do usuário/sistema em um DSL (linguagem de alto nível) para automação de testes.
+
+### **services/ — Regras de negócio e orquestração**
+- **AccountService.ts** → Centraliza regras para criação/validação de usuários via API.
+Não chama o adapter diretamente: aplica lógicas de validação e negócio antes/depois.
+- **DbService.ts** → Camada intermediária entre testes/repos e o adapter de banco.
+Aplica padronização (ex.: logs, attachments no Allure, trace).
+Resumo: abstraem a infraestrutura para um nível de domínio mais expressivo.
+
+### **sql/ — Scripts SQL reutilizáveis**
+Scripts versionados para seed/setup/execução em testes.
+
+**test.sql**→ consulta completa de usuários.
+**users_replace.sql** → consulta parametrizada com placeholders ($$).
+
+### **utils/ — Utilitários do framework**
+- **AllureLogger.ts** → Facilita registrar steps, anexos e mensagens customizadas no Allure.
+- **AllureStep.ts** → Decorator para adicionar automaticamente steps Allure em métodos de classes (ex.: PageObjects).
+
+### **tests/ — Suites de testes**
+Aqui ficam os testes automatizados em si, separados por padrão de implementação.
+
+- **global-setup.ts / global-teardown.ts**
+Executados antes/depois da suite de testes para configurar recursos globais (ex.: abrir e fechar conexões com banco).
+
+- **PageObject/**
+  - **home.spec.ts** → Testes da Home usando POM.
+  - **account_api.spec.ts** → Testes de Account API via Service + Adapter.
+  - **connect_database.spec.ts** → Testes DB usando repositórios/serviços.
+
+- **Screenplay/**
+  - **home.spec.ts** → Versão equivalente utilizando padrão Screenplay.
+  - **account_api.spec.ts** → Testes de criação de usuário via Actor + abilities + tasks.
+  - **connect_database.spec.ts**→ Testes de database orientados a atores/tasks.
+
+Resumo: permitem comparar dois estilos de escrita de testes (POM vs Screenplay) consumindo a mesma arquitetura de suporte.
+
+## Resumo da Arquitetura
+
+- Camadas externas (adapters): UI (Page), API, Database.
+- Camada intermediária (services/repos): lógica de negócio e persistência orientada a entidades.
+- Camada de domínio (interfaces + screenplay): descreve “o que” e não “como”, com alto nível de abstração.
+- Layer de testes (specs): consome toda essa infraestrutura escrevendo casos em dois estilos diferentes (POM ou Screenplay).
+
+Isso garante baixo acoplamento, alta testabilidade e flexibilidade para evoluir o projeto.
