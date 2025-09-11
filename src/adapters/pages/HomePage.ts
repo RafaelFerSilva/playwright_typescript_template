@@ -1,6 +1,8 @@
 import { Page, expect } from "@playwright/test";
+import { withAllureSteps } from "@utils/AllureStep"
 
-export class HomePage {
+
+class HomePageBase {
   readonly page: Page;
 
   constructor(page: Page) {
@@ -11,7 +13,10 @@ export class HomePage {
     await this.page.goto(url);
   }
 
+  
   async expectHeroTitleVisible(title: string): Promise<void> {
     await expect(this.page.getByTestId("hero-title")).toHaveText(title);
   }
 }
+
+export const HomePage = withAllureSteps(HomePageBase, 'HomePage');

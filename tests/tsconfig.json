@@ -15,7 +15,8 @@
       "@services/*": ["src/services/*"],
       "@adapters/*": ["src/adapters/*"],
       "@sql": ["src/sql/*"],
-      "@repositories/*": ["src/repositories/*"]
+      "@repositories/*": ["src/repositories/*"],
+      "@errors/*": ["src/errors/*"]
     }
   },
   "include": [

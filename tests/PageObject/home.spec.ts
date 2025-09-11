@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 import { HomePage } from "@pages/HomePage";
 
 test.describe("Home Page Tests - Page Object", () => {
-  let homePage: HomePage;
+  let homePage: InstanceType<typeof HomePage>;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
