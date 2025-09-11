@@ -12,7 +12,10 @@
       "@tests/*": ["tests/*"],
       "@fixtures/*": ["tests/fixtures/*"],
       "@interfaces/*": ["src/interfaces/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@sql": ["src/sql/*"],
+      "@repositories/*": ["src/repositories/*"]
     }
   },
   "include": [

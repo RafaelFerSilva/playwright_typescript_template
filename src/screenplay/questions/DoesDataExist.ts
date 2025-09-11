@@ -1,6 +1,6 @@
 import { Actor } from '@screenplay/core/Actor';
 import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
-import { IQuestion } from '@interfaces/IQuestion';
+import { IQuestion } from '@framework/interfaces/IQuestion';
 
 export class DoesDataExist implements IQuestion<any> {
   private rows: any[];
