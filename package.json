@@ -29,6 +29,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "dotenv": "^17.2.2"
+    "dotenv": "^17.2.2",
+    "mysql2": "^3.14.5"
   }
 }
