@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🚀 Executando pre-commit hooks..."
+
+# 1. Rodar lint-staged (ESLint + Prettier nos arquivos staged)
+echo "📝 Executando lint e formatação nos arquivos staged..."
+npx lint-staged
+
+# Verificar se lint-staged passou
+if [ $? -ne 0 ]; then
+  echo "❌ Lint/formatação falhou. Corrija os erros antes de commitar."
+  exit 1
+fi
+
+# 2. Compilar TypeScript (usando seu script pretest)
+echo "🔧 Compilando TypeScript..."
+npm run pretest
+
+# Verificar se compilação passou
+if [ $? -ne 0 ]; then
+  echo "❌ Compilação TypeScript falhou. Corrija os erros de tipo antes de commitar."
+  exit 1
+fi
+
+# 3. Rodar testes do Playwright (modo CI/headless)
+echo "🎭 Executando testes do Playwright..."
+npm run test:ci
+
+# Verificar se testes passaram
+if [ $? -ne 0 ]; then
+  echo "❌ Testes do Playwright falharam. Corrija os testes antes de commitar."
+  exit 1
+fi
+
+echo "✅ Todos os checks passaram! Commit liberado."
