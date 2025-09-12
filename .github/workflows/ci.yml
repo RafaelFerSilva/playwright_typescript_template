@@ -81,6 +81,10 @@ jobs:
 
       - run: npm ci
 
+      # Instala os browsers do Playwright
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
       # 3. Popular o banco usando script Python
       - name: Initialize database
         run: python init_db.py
