@@ -24,7 +24,39 @@ jobs:
           --health-cmd="mysqladmin ping --host=localhost --user=root --password=rootpassword"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=10
+          --health-retries=15
+
+    env:
+      # Playwright defaults
+      BASE_URL: https://test-automation-practice.com.br/
+      HEADLESS: "false"
+      CI: "false"
+      TRACE: off
+      SCREENSHOT: only-on-failure
+      VIDEO: off
+      ACTION_TIMEOUT: 15000
+      NAVIGATION_TIMEOUT: 30000
+      TEST_TIMEOUT: 60000
+      RETRIES: 0
+      REPORTER: allure-playwright:outputFolder=allure-results
+
+      # Browser matrix defaults
+      TEST_CHROMIUM: "true"
+      TEST_FIREFOX: "false"
+      TEST_WEBKIT: "false"
+      TEST_MOBILE: "false"
+
+      # Database vars
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+
+      DB_NAME: testdb
+      DB_USER: testuser
+      DB_PASSWORD: testpassword
+      DB_HOST: localhost
+      DB_PORT: 3306
 
     steps:
       - uses: actions/checkout@v4
@@ -52,18 +84,16 @@ jobs:
       # 3. Popular o banco usando script Python
       - name: Initialize database
         run: python init_db.py
-        env:
-          DB_HOST: 127.0.0.1
-          DB_USER: testuser
-          DB_PASSWORD: testpassword
-          DB_NAME: testdb
-          DB_PORT: 3306
 
-      # 4. Checks de qualidade + testes
-      - run: npm run quality
+      # 4. Checks de qualidade (lint + prettier + type-check)
+      - name: Run quality checks
+        run: npm run quality
 
-      - run: npm run test:ci
+      # 5. Rodar testes Playwright
+      - name: Run Playwright tests
+        run: npm run test:ci
 
+      # 6. Upload do report sempre (mesmo se falhar)
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
