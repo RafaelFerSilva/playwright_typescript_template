@@ -1,4 +1,3 @@
-
 import { DemoQAAccountApiAdapter } from "@framework/adapters/api/DemoQAAccountApiAdapter";
 import { IAccountApiPort } from "@interfaces/IAccountApiPort";
 import { test, expect } from "@playwright/test";
@@ -20,22 +19,16 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
     accountService = new AccountService(apiAdapter);
 
     // 3. Actor com habilidade de usar Service
-    actor = Actor.named("API Tester").whoCan(
-      CallAccountService.using(accountService)
-    );
+    actor = Actor.named("API Tester").whoCan(CallAccountService.using(accountService));
   });
 
   test("Must register user using Service with business validations", async () => {
     const userName = `serviceuser_${Date.now()}`;
     const password = "784512Asd!";
 
-    await actor.attemptsTo(
-      CreateUserViaService.withCredentials(userName, password)
-    );
+    await actor.attemptsTo(CreateUserViaService.withCredentials(userName, password));
 
-    const validationsApplied = await actor.asksFor(
-      ServiceValidationsWereApplied.for(userName)
-    );
+    const validationsApplied = await actor.asksFor(ServiceValidationsWereApplied.for(userName));
 
     expect(validationsApplied).toBe(true);
 
@@ -51,9 +44,7 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
 
     // Service deve falhar na validação antes mesmo de chamar o Adapter
     await expect(
-      actor.attemptsTo(
-        CreateUserViaService.withCredentials(userName, invalidPassword)
-      )
+      actor.attemptsTo(CreateUserViaService.withCredentials(userName, invalidPassword)),
     ).rejects.toThrow("Password deve ter pelo menos 6 caracteres");
   });
 
@@ -63,9 +54,7 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
 
     // Service deve falhar na validação de username vazio
     await expect(
-      actor.attemptsTo(
-        CreateUserViaService.withCredentials(emptyUserName, password)
-      )
+      actor.attemptsTo(CreateUserViaService.withCredentials(emptyUserName, password)),
     ).rejects.toThrow("Username é obrigatório");
   });
 
@@ -74,13 +63,11 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
     const password = "784512Asd!";
 
     // Criar primeiro usuário
-    await actor.attemptsTo(
-      CreateUserViaService.withCredentials(userName, password)
-    );
+    await actor.attemptsTo(CreateUserViaService.withCredentials(userName, password));
 
     // Tentar criar usuário duplicado deve falhar
     await expect(
-      actor.attemptsTo(CreateUserViaService.withCredentials(userName, password))
+      actor.attemptsTo(CreateUserViaService.withCredentials(userName, password)),
     ).rejects.toThrow();
   });
 });

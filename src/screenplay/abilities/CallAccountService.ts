@@ -1,5 +1,3 @@
-
-
 import { IAbility } from "@framework/interfaces/IAbility";
 import { IAccountApiPort } from "@interfaces/IAccountApiPort";
 
@@ -18,4 +16,3 @@ export class CallAccountService implements IAbility {
     return this.accountService;
   }
 }
-

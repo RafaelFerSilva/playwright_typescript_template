@@ -1,6 +1,5 @@
-
-import { IDBConfig } from '@framework/interfaces/IDbConfig';
-import { MySQLAdapter } from './MySQLAdapter';
+import { IDBConfig } from "@framework/interfaces/IDbConfig";
+import { MySQLAdapter } from "./MySQLAdapter";
 
 let instance: MySQLAdapter | null = null;
 

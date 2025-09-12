@@ -12,7 +12,7 @@ export class DbService {
       AllureLogger.attachment(
         "Resultado do script SQL",
         JSON.stringify(result, null, 2),
-        "application/json"
+        "application/json",
       );
       return result;
     });
@@ -20,16 +20,16 @@ export class DbService {
 
   async replaceValuesAndExecuteScript(scriptPath: string, values: string[]) {
     return test.step(`Executar script SQL com substituição de valores: ${scriptPath}`, async () => {
-      AllureLogger.info(
-        `Iniciando execução do script SQL com valores: ${values.join(", ")}`
+      AllureLogger.info(`Iniciando execução do script SQL com valores: ${values.join(", ")}`);
+      const { modifiedSql, rows } = await this.adapter.replaceValuesAndExecuteScript(
+        scriptPath,
+        values,
       );
-      const { modifiedSql, rows } =
-        await this.adapter.replaceValuesAndExecuteScript(scriptPath, values);
       AllureLogger.attachment("SQL modificado", modifiedSql, "text/plain");
       AllureLogger.attachment(
         "Resultado do script SQL",
         JSON.stringify(rows, null, 2),
-        "application/json"
+        "application/json",
       );
       return { modifiedSql, rows };
     });
@@ -38,9 +38,7 @@ export class DbService {
   async query(sql: string, params?: any[]) {
     return test.step(`Executar consulta SQL: ${sql}`, async () => {
       if (params && params.length > 0) {
-        AllureLogger.info(
-          `Executando consulta SQL com parâmetros: ${params.join(", ")}`
-        );
+        AllureLogger.info(`Executando consulta SQL com parâmetros: ${params.join(", ")}`);
       }
 
       const rows = await this.adapter.query(sql, params);
@@ -49,7 +47,7 @@ export class DbService {
         AllureLogger.attachment(
           "Parâmetros da consulta",
           JSON.stringify(params, null, 2),
-          "application/json"
+          "application/json",
         );
       }
       if (!rows || rows.length === 0) {
@@ -61,15 +59,13 @@ export class DbService {
 
   async execute(sql: string, params?: any[]) {
     return test.step(`Executar comando SQL: ${sql}`, async () => {
-      AllureLogger.info(
-        `Executando comando SQL com parâmetros: ${params?.join(", ")}`
-      );
+      AllureLogger.info(`Executando comando SQL com parâmetros: ${params?.join(", ")}`);
       const result = await this.adapter.execute(sql, params);
       AllureLogger.attachment("Comando SQL", sql, "text/plain");
       AllureLogger.attachment(
         "Parâmetros do comando",
         JSON.stringify(params, null, 2),
-        "application/json"
+        "application/json",
       );
       return result;
     });

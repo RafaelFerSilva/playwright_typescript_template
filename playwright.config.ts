@@ -17,26 +17,20 @@ const requiredEnvVars = ["BASE_URL"];
 for (const varName of requiredEnvVars) {
   if (!process.env[varName]) {
     throw new Error(
-      `Variável de ambiente obrigatória ${varName} não está definida para o ambiente ${ENV}`
+      `Variável de ambiente obrigatória ${varName} não está definida para o ambiente ${ENV}`,
     );
   }
 }
 
 function parseTraceMode(value?: string): TraceMode | undefined {
-  const valid: TraceMode[] = [
-    "off",
-    "on",
-    "on-first-retry",
-    "retain-on-failure",
-  ];
+  const valid: TraceMode[] = ["off", "on", "on-first-retry", "retain-on-failure"];
   if (value && valid.includes(value as TraceMode)) return value as TraceMode;
   return undefined;
 }
 
 function parseScreenshotMode(value?: string): ScreenshotMode | undefined {
   const valid: ScreenshotMode[] = ["off", "on", "only-on-failure"];
-  if (value && valid.includes(value as ScreenshotMode))
-    return value as ScreenshotMode;
+  if (value && valid.includes(value as ScreenshotMode)) return value as ScreenshotMode;
   return undefined;
 }
 
@@ -47,9 +41,7 @@ function parseVideoMode(value?: string): VideoMode | undefined {
 }
 
 function parseReport(): string | ReporterDescription[] {
-  const reporters = process.env.REPORTER?.split(",").map((r) => r.trim()) || [
-    "html",
-  ];
+  const reporters = process.env.REPORTER?.split(",").map((r) => r.trim()) || ["html"];
 
   if (reporters.length === 1) {
     const [name, options] = parseReporterWithOptions(reporters[0]);
@@ -69,16 +61,19 @@ function parseReporterWithOptions(input: string): [string, any?] {
   const [name, opts] = input.split(":");
   if (!opts) return [name];
 
-  const options = opts.split(";").reduce((acc, pair) => {
-    const [key, value] = pair.split("=");
-    if (key && value !== undefined) {
-      if (value === "true") acc[key] = true;
-      else if (value === "false") acc[key] = false;
-      else if (!isNaN(Number(value))) acc[key] = Number(value);
-      else acc[key] = value;
-    }
-    return acc;
-  }, {} as Record<string, any>);
+  const options = opts.split(";").reduce(
+    (acc, pair) => {
+      const [key, value] = pair.split("=");
+      if (key && value !== undefined) {
+        if (value === "true") acc[key] = true;
+        else if (value === "false") acc[key] = false;
+        else if (!isNaN(Number(value))) acc[key] = Number(value);
+        else acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
 
   return [name, options];
 }

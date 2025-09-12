@@ -1,9 +1,7 @@
-
-
-import { Actor } from '@screenplay/core/Actor';
-import { CallAccountService } from '@screenplay/abilities/CallAccountService';
-import { IUser } from '@interfaces/IUser';
-import { ITask } from '@framework/interfaces/ITask';
+import { Actor } from "@screenplay/core/Actor";
+import { CallAccountService } from "@screenplay/abilities/CallAccountService";
+import { IUser } from "@interfaces/IUser";
+import { ITask } from "@framework/interfaces/ITask";
 
 /**
  * Task simples para criar um usuário via Service
@@ -32,7 +30,6 @@ export class CreateUserViaService implements ITask {
 
       // Armazenar resposta no contexto do ator
       (actor as any).lastUserCreationResponse = response;
-
     } catch (error) {
       throw error;
     }

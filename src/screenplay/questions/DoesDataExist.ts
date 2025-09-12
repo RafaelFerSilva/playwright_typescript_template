@@ -1,6 +1,6 @@
-import { Actor } from '@screenplay/core/Actor';
-import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
-import { IQuestion } from '@framework/interfaces/IQuestion';
+import { Actor } from "@screenplay/core/Actor";
+import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
+import { IQuestion } from "@framework/interfaces/IQuestion";
 
 export class DoesDataExist implements IQuestion<any> {
   private rows: any[];
@@ -13,7 +13,7 @@ export class DoesDataExist implements IQuestion<any> {
     return new DoesDataExist(rows);
   }
 
-  async answeredBy(actor: Actor): Promise<any>{
+  async answeredBy(actor: Actor): Promise<any> {
     actor.abilityTo(AccessDatabase).db();
     return this.rows.length > 0;
   }

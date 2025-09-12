@@ -1,6 +1,6 @@
-import { Actor } from '@screenplay/core/Actor';
-import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
-import { IQuestion } from '@interfaces/IQuestion';
+import { Actor } from "@screenplay/core/Actor";
+import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
+import { IQuestion } from "@interfaces/IQuestion";
 
 export class QueryDatabase implements IQuestion<any[]> {
   private scriptPath: string;

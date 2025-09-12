@@ -33,9 +33,9 @@ export class ApiError extends Error {
   constructor(
     public readonly statusCode: number,
     public readonly endpoint: string,
-    message: string
+    message: string,
   ) {
     super(`API Error [${statusCode}] ${endpoint}: ${message}`);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }

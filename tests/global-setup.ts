@@ -9,7 +9,6 @@ const dbConfig: IDBConfig = {
   DB_PASSWORD: process.env.DB_PASSWORD!,
 };
 
-
 async function globalSetup() {
   const db = getDatabaseInstance(dbConfig);
   await db.connect();

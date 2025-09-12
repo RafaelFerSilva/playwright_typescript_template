@@ -1,4 +1,3 @@
-
 import { Actor } from "@screenplay/core/Actor";
 
 export interface IQuestion<T = any> {

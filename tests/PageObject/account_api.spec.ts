@@ -1,4 +1,3 @@
-
 import { DemoQAAccountApiAdapter } from "@framework/adapters/api/DemoQAAccountApiAdapter";
 import { IAccountApiPort } from "@interfaces/IAccountApiPort";
 import { IUser } from "@interfaces/IUser";

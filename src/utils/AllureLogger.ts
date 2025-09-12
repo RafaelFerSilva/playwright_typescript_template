@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test } from "@playwright/test";
 
 export class AllureLogger {
   static log(message: string) {
@@ -14,19 +14,19 @@ export class AllureLogger {
   }
 
   static error(message: string, error?: Error) {
-    console.error(`[ALLURE ERROR] ${message}`, error || '');
+    console.error(`[ALLURE ERROR] ${message}`, error || "");
     test.step(`❌ ${message}`, async () => {
       if (error) {
-        this.attachment('Error Details', error.stack || error.message, 'text/plain');
+        this.attachment("Error Details", error.stack || error.message, "text/plain");
       }
     });
   }
 
   static success(message: string, details?: any) {
-    console.info(`[ALLURE SUCCESS] ✅ ${message}`, details || '');
+    console.info(`[ALLURE SUCCESS] ✅ ${message}`, details || "");
     test.step(`✅ ${message}`, async () => {
       if (details) {
-        this.attachment('Success Details', JSON.stringify(details, null, 2), 'application/json');
+        this.attachment("Success Details", JSON.stringify(details, null, 2), "application/json");
       }
     });
   }
@@ -46,7 +46,7 @@ export class AllureLogger {
     const testInfo = test.info();
     if (testInfo) {
       await testInfo.attach(name, {
-        body: typeof content === 'string' ? Buffer.from(content, 'utf-8') : content,
+        body: typeof content === "string" ? Buffer.from(content, "utf-8") : content,
         contentType: type,
       });
     } else {
@@ -57,10 +57,10 @@ export class AllureLogger {
   static apiRequest(method: string, url: string, payload?: any) {
     const message = `API ${method.toUpperCase()} ${url}`;
     test.step(message, async () => {
-      this.attachment('Request URL', url, 'text/plain');
-      this.attachment('HTTP Method', method.toUpperCase(), 'text/plain');
+      this.attachment("Request URL", url, "text/plain");
+      this.attachment("HTTP Method", method.toUpperCase(), "text/plain");
       if (payload) {
-        this.attachment('Request Payload', JSON.stringify(payload, null, 2), 'application/json');
+        this.attachment("Request Payload", JSON.stringify(payload, null, 2), "application/json");
       }
     });
   }
@@ -68,9 +68,9 @@ export class AllureLogger {
   static apiResponse(statusCode: number, responseBody?: any) {
     const message = `API Response [${statusCode}]`;
     test.step(message, async () => {
-      this.attachment('Status Code', statusCode.toString(), 'text/plain');
+      this.attachment("Status Code", statusCode.toString(), "text/plain");
       if (responseBody) {
-        this.attachment('Response Body', JSON.stringify(responseBody, null, 2), 'application/json');
+        this.attachment("Response Body", JSON.stringify(responseBody, null, 2), "application/json");
       }
     });
   }

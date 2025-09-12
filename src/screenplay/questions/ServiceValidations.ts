@@ -1,5 +1,3 @@
-
-
 import { Actor } from "@screenplay/core/Actor";
 import { IUserCreationResponse } from "@interfaces/IUser";
 import { IQuestion } from "@framework/interfaces/IQuestion";
@@ -19,8 +17,7 @@ export class ServiceValidationsWereApplied implements IQuestion<boolean> {
   }
 
   async answeredBy(actor: Actor): Promise<boolean> {
-    const creationResponse = (actor as any)
-      .lastUserCreationResponse as IUserCreationResponse;
+    const creationResponse = (actor as any).lastUserCreationResponse as IUserCreationResponse;
 
     if (!creationResponse) {
       return false;
@@ -28,16 +25,12 @@ export class ServiceValidationsWereApplied implements IQuestion<boolean> {
 
     const validations = {
       hasValidUsername: creationResponse.username === this.expectedUserName,
-      hasValidUserId: !!(
-        creationResponse.userID && creationResponse.userID.trim() !== ""
-      ),
+      hasValidUserId: !!(creationResponse.userID && creationResponse.userID.trim() !== ""),
       hasBooksArray: Array.isArray(creationResponse.books),
       usernameMatches: creationResponse.username === this.expectedUserName,
     };
 
-    const allValidationsPassed = Object.values(validations).every(
-      (v) => v === true
-    );
+    const allValidationsPassed = Object.values(validations).every((v) => v === true);
 
     return allValidationsPassed;
   }

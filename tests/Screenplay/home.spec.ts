@@ -11,6 +11,6 @@ test.describe("Home Page - Screenplay", () => {
     await actor.attemptsTo(NavigateTo.theUrl());
 
     const isVisible = await actor.asksFor(IsHeroTitleVisible.onPage());
-    expect(isVisible).toBeTruthy()
+    expect(isVisible).toBeTruthy();
   });
 });

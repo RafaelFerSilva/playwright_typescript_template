@@ -1,6 +1,6 @@
-import { Actor } from '@screenplay/core/Actor';
-import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
-import { ITask } from '@interfaces/ITask';
+import { Actor } from "@screenplay/core/Actor";
+import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
+import { ITask } from "@interfaces/ITask";
 
 export class ExecuteSqlScript implements ITask {
   private scriptPath: string;

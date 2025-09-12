@@ -13,9 +13,7 @@ export class DemoQAAccountApiAdapter implements IAccountApiPort {
     const endpoint = `${this.baseUrl}/User`;
 
     try {
-      AllureLogger.info(
-        `Enviando requisição para criar usuário: { username: ${user.userName} }`
-      );
+      AllureLogger.info(`Enviando requisição para criar usuário: { username: ${user.userName} }`);
 
       const response = await this.request.post(endpoint, {
         headers: {
@@ -32,19 +30,18 @@ export class DemoQAAccountApiAdapter implements IAccountApiPort {
 
       if (!response.ok()) {
         AllureLogger.error(
-          `Falha na criação de usuário - Status: ${response.status()} - Detalhes: ${JSON.stringify(responseBody)}`
+          `Falha na criação de usuário - Status: ${response.status()} - Detalhes: ${JSON.stringify(responseBody)}`,
         );
 
         throw new ApiError(
           response.status(),
           endpoint,
-          responseBody?.message ||
-            `HTTP ${response.status()}: ${JSON.stringify(responseBody)}`
+          responseBody?.message || `HTTP ${response.status()}: ${JSON.stringify(responseBody)}`,
         );
       }
 
       AllureLogger.info(
-        `Usuário criado com sucesso via API: { username: ${responseBody.username}, userID: ${responseBody.userID} }`
+        `Usuário criado com sucesso via API: { username: ${responseBody.username}, userID: ${responseBody.userID} }`,
       );
 
       return responseBody;
@@ -53,14 +50,8 @@ export class DemoQAAccountApiAdapter implements IAccountApiPort {
         throw error;
       }
 
-      AllureLogger.error(
-        `Erro inesperado ao criar usuário: ${(error as Error).message}`
-      );
-      throw new ApiError(
-        0,
-        endpoint,
-        `Unexpected error: ${(error as Error).message}`
-      );
+      AllureLogger.error(`Erro inesperado ao criar usuário: ${(error as Error).message}`);
+      throw new ApiError(0, endpoint, `Unexpected error: ${(error as Error).message}`);
     }
   }
 }

@@ -11,14 +11,13 @@ Ao final temos uma explicação detalhada sobre cada componente e sua função n
 ## Inicializar um projeto
 
 - Vamos iniciar criando uma pasta para nosso projeto.
-    
-    ```yaml
-    ~/Documents/playwright_typescript_template
-    ```
-    
+
+  ```yaml
+  ~/Documents/playwright_typescript_template
+  ```
 
 - O playwright tem um comando que já realiza a configuração básica de um projeto.
-    - No nosso caso selecionamos para utilizar typescript.
+  - No nosso caso selecionamos para utilizar typescript.
 
 [Installation | Playwright](https://playwright.dev/docs/intro#installing-playwright)
 
@@ -118,7 +117,6 @@ test('get started link', async ({ page }) => {
 
 Podemos ver no report que são executados por 3 tipos de navegadores
 
-
 Se deseja executar os testes em um único navegador podemos utilizar um comando como o abaixo. A flag — headed indica que desejamos ver a execução do testes, por default o framework executa em headless mode.
 
 ```bash
@@ -144,7 +142,6 @@ Para facilitar nossa execução podemos criar um script no package.json para exc
     "@types/node": "^24.3.0"
   }
 }
-
 ```
 
 Agora quando executarmos o alias abaixo o comando será executado.
@@ -170,7 +167,7 @@ Darei destaque aqui a duas: **screenshot** e **headless.**
 Podemos configurar para salvar screenshots de forma automática e podemos também configurar para estar ou não em headless mode
 
 ```tsx
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Read environment variables from file.
@@ -184,7 +181,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-conf  iguration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -194,17 +191,17 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
 
     // Capture screenshot after each test failure.
-    screenshot: 'only-on-failure',
+    screenshot: "only-on-failure",
 
     // Run browser in headless mode.
     headless: false,
@@ -213,18 +210,18 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
 
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
 
     /* Test against mobile viewports. */
@@ -255,7 +252,6 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
 ```
 
 No nosso caso como colocar headless para false podemos remover a tag —headed do nosso script
@@ -281,22 +277,22 @@ No nosso caso como colocar headless para false podemos remover a tag —headed d
 }
 ```
 
-Em relação ao screenshot podemos fazer o seguinte: 
+Em relação ao screenshot podemos fazer o seguinte:
 Vá até o arquivo de teste e faça uma alteração para que um dos testes falhe, exemplo adicionar um letra a mais na validação de texto:
 
 ```tsx
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test("get started link", async ({ page }) => {
+  await page.goto("https://playwright.dev/");
 
   // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  await page.getByRole("link", { name: "Get started" }).click();
 
   // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installationn' })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Installationn" })).toBeVisible();
 });
 ```
 
-Agora se executarmos os testes deixando a linha da configuração do screenshot  comentada veremos que terá uma falha mais sem screenshot. Se executarmos novamente descomentando a linha vemos que teremos o screenshot com o erro em questão.
+Agora se executarmos os testes deixando a linha da configuração do screenshot comentada veremos que terá uma falha mais sem screenshot. Se executarmos novamente descomentando a linha vemos que teremos o screenshot com o erro em questão.
 
 ## Emuladores
 
@@ -312,7 +308,7 @@ Podemos configurar para executarmos testes emulando devices como mobile por exem
 **playwright.config.ts**
 
 ```tsx
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Read environment variables from file.
@@ -326,7 +322,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-conf  iguration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -336,14 +332,14 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
 
     // Capture screenshot after each test failure.
     // screenshot: 'only-on-failure',
@@ -355,18 +351,18 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
 
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
 
     /* Test against mobile viewports. */
@@ -375,8 +371,8 @@ export default defineConfig({
     //   use: { ...devices['Pixel 5'] },
     // },
     {
-      name: 'Mobile',
-      use: { ...devices['iPhone 12'] },
+      name: "Mobile",
+      use: { ...devices["iPhone 12"] },
     },
 
     /* Test against branded browsers. */
@@ -397,7 +393,6 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
 ```
 
 Para execução faremos algo como:
@@ -441,17 +436,17 @@ Agora vamos atualizar nosso arquivo de configuração para ler os arquivos de va
 **playwright.config.ts**
 
 ```tsx
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-import dotenv from 'dotenv';
-import path from 'path';
+import dotenv from "dotenv";
+import path from "path";
 
 // Define o ambiente padrão como 'uat' caso não seja passado
-const env = process.env.ENV || 'uat';
+const env = process.env.ENV || "uat";
 
 dotenv.config({ path: path.resolve(__dirname, `${env}.env`) });
 
@@ -459,34 +454,34 @@ dotenv.config({ path: path.resolve(__dirname, `${env}.env`) });
  * See https://playwright.dev/docs/test-conf  iguration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: "html",
   use: {
     baseURL: process.env.BASE_URL,
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
     headless: false,
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
 
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
 
     /* Test against mobile viewports. */
@@ -495,8 +490,8 @@ export default defineConfig({
     //   use: { ...devices['Pixel 5'] },
     // },
     {
-      name: 'Mobile',
-      use: { ...devices['iPhone 12'] },
+      name: "Mobile",
+      use: { ...devices["iPhone 12"] },
     },
 
     /* Test against branded browsers. */
@@ -517,7 +512,6 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
 ```
 
 Agora para executar cada ambiente precisamos passar a variável ENV desejada. O comando de execução dos testes ficaria da seguinte forma:
@@ -691,24 +685,24 @@ Na raiz do projeto crie o arquivo tsconfig.json, ele será responsável pela con
 ```json
 {
   "compilerOptions": {
-    "target": "ES2020",                          // Moderno, compatível com Node.js e navegadores atuais
-    "module": "CommonJS",                        // Compatível com Node.js (Playwright roda em Node)
-    "lib": ["ES2020", "DOM"],                    // Suporte a APIs modernas e DOM para testes web
-    "strict": true,                              // Ativa todas as verificações estritas do TS para qualidade
-    "moduleResolution": "node",                  // Resolve módulos no estilo Node.js
-    "esModuleInterop": true,                      // Facilita importações de módulos CommonJS
-    "skipLibCheck": true,                         // Ignora checagem de tipos em libs para acelerar build
-    "forceConsistentCasingInFileNames": true,    // Evita problemas de case sensitivity em sistemas diferentes
-    "types": ["@playwright/test", "node"],       // Tipos essenciais para Playwright e Node.js
-    "outDir": "dist",                             // Saída compilada
-    "rootDir": ".",                               // Raiz do projeto
-    "noImplicitAny": true,                        // Evita any implícito para maior segurança
-    "noUnusedLocals": true,                        // Erros para variáveis locais não usadas
-    "noUnusedParameters": true,                    // Erros para parâmetros não usados
-    "noFallthroughCasesInSwitch": true,           // Evita fallthrough em switch
-    "resolveJsonModule": true,                     // Permite importar JSON como módulo
-    "allowSyntheticDefaultImports": true,         // Permite import default sintético para compatibilidade
-    "incremental": true                            // Compilação incremental para builds mais rápidos
+    "target": "ES2020", // Moderno, compatível com Node.js e navegadores atuais
+    "module": "CommonJS", // Compatível com Node.js (Playwright roda em Node)
+    "lib": ["ES2020", "DOM"], // Suporte a APIs modernas e DOM para testes web
+    "strict": true, // Ativa todas as verificações estritas do TS para qualidade
+    "moduleResolution": "node", // Resolve módulos no estilo Node.js
+    "esModuleInterop": true, // Facilita importações de módulos CommonJS
+    "skipLibCheck": true, // Ignora checagem de tipos em libs para acelerar build
+    "forceConsistentCasingInFileNames": true, // Evita problemas de case sensitivity em sistemas diferentes
+    "types": ["@playwright/test", "node"], // Tipos essenciais para Playwright e Node.js
+    "outDir": "dist", // Saída compilada
+    "rootDir": ".", // Raiz do projeto
+    "noImplicitAny": true, // Evita any implícito para maior segurança
+    "noUnusedLocals": true, // Erros para variáveis locais não usadas
+    "noUnusedParameters": true, // Erros para parâmetros não usados
+    "noFallthroughCasesInSwitch": true, // Evita fallthrough em switch
+    "resolveJsonModule": true, // Permite importar JSON como módulo
+    "allowSyntheticDefaultImports": true, // Permite import default sintético para compatibilidade
+    "incremental": true // Compilação incremental para builds mais rápidos
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]
@@ -787,7 +781,6 @@ Atualize seu package json adicionando scripts para lint e format
     "dotenv": "^17.2.2"
   }
 }
-
 ```
 
 ---
@@ -796,7 +789,7 @@ Atualize seu package json adicionando scripts para lint e format
 
 Agora que temos uma base para nosso projeto vamos começar a automatizar uma aplicação (site) e assim conforme as necessidade vão surgindo nós vamos evoluindo nosso projeto.
 
-Vamos começar atualizando o teste que veio de exemplo com a instalação do playwright para usarmos a nossa base url e acessar o site que vamos automatizar: 
+Vamos começar atualizando o teste que veio de exemplo com a instalação do playwright para usarmos a nossa base url e acessar o site que vamos automatizar:
 
 [Test Automation Practice](https://test-automation-practice.com.br/)
 
@@ -826,19 +819,17 @@ Atualizamos o arquivo da pasta tests para:
 **tests/home.spec.ts**
 
 ```tsx
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Home Page', () => {
-  
+test.describe("Home Page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-  })
+    await page.goto("/");
+  });
 
-  test('Should Be Possible Access Home Page', async ({ page }) => {
-    await expect(page.getByTestId('hero-title')).toBeVisible();
+  test("Should Be Possible Access Home Page", async ({ page }) => {
+    await expect(page.getByTestId("hero-title")).toBeVisible();
   });
 });
-
 ```
 
 O que temos em nosso teste é basicamente:
@@ -951,7 +942,6 @@ Arquivo da raiz do projeto:
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist", "tests"]
 }
-
 ```
 
 Arquivo da pasta de testes:
@@ -974,10 +964,7 @@ Arquivo da pasta de testes:
       "@fixtures/*": ["tests/fixtures/*"]
     }
   },
-  "include": [
-    "../src/**/*.ts",
-    "**/*.ts"
-  ],
+  "include": ["../src/**/*.ts", "**/*.ts"],
   "exclude": ["node_modules", "../dist"]
 }
 ```
@@ -1016,7 +1003,7 @@ Como estamos fazendo um teste de front-end o actor precisar ter a habilidade de 
 **src/screenplay/abilities/BrowseTheWeb.ts**
 
 ```tsx
-import { Page } from '@playwright/test';
+import { Page } from "@playwright/test";
 
 export class BrowseTheWeb {
   constructor(public page: Page) {}
@@ -1067,7 +1054,7 @@ export class Actor {
   }
 
   attemptsTo(...tasks: ITask[]) {
-    return Promise.all(tasks.map(task => task.performAs(this)));
+    return Promise.all(tasks.map((task) => task.performAs(this)));
   }
 
   asksFor<T>(question: IQuestion): Promise<T> {
@@ -1083,14 +1070,13 @@ Dado que o ator tem a habilidade de manipular um browser nós vamos criar uma ta
 **src/screenplay/tasks/NavigateTo.ts**
 
 ```tsx
-
-import { BrowseTheWeb } from '@screenplay/abilities/BrowseTheWeb';
-import { ITask, Actor } from '@screenplay/core/Actor';
+import { BrowseTheWeb } from "@screenplay/abilities/BrowseTheWeb";
+import { ITask, Actor } from "@screenplay/core/Actor";
 
 export class NavigateTo implements ITask {
   constructor(private url: string) {}
 
-  static theUrl(url: string = '/') {
+  static theUrl(url: string = "/") {
     return new NavigateTo(url);
   }
 
@@ -1099,7 +1085,6 @@ export class NavigateTo implements ITask {
     await browser.page.goto(this.url);
   }
 }
-
 ```
 
 ### 4. Criar uma question para realizar uma validação (assertions)
@@ -1109,9 +1094,9 @@ Até o momento não sabíamos o que iriámos testar, temos a habilidade de acess
 **src/screenplay/questions/IsHeroTitleVisible.ts**
 
 ```tsx
-import { expect } from '@playwright/test';
-import { BrowseTheWeb } from '@screenplay/abilities/BrowseTheWeb';
-import { IQuestion, Actor } from '@screenplay/core/Actor';
+import { expect } from "@playwright/test";
+import { BrowseTheWeb } from "@screenplay/abilities/BrowseTheWeb";
+import { IQuestion, Actor } from "@screenplay/core/Actor";
 
 export class IsHeroTitleVisible implements IQuestion {
   static onPage() {
@@ -1120,7 +1105,7 @@ export class IsHeroTitleVisible implements IQuestion {
 
   async answeredBy(actor: Actor): Promise<boolean> {
     const browser = actor.abilityTo(BrowseTheWeb);
-    const element = browser.page.getByTestId('hero-title');
+    const element = browser.page.getByTestId("hero-title");
     try {
       await expect(element).toBeVisible();
       return true;
@@ -1129,7 +1114,6 @@ export class IsHeroTitleVisible implements IQuestion {
     }
   }
 }
-
 ```
 
 ### 5. Criar o teste para usar Screenplay
@@ -1158,10 +1142,9 @@ test.describe("Home Page - Screenplay", () => {
     await actor.attemptsTo(NavigateTo.theUrl());
 
     const isVisible = await actor.asksFor(IsHeroTitleVisible.onPage());
-    expect(isVisible).toBeTruthy()
+    expect(isVisible).toBeTruthy();
   });
 });
-
 ```
 
 Quando olhamos para o screenplay vemos que temos uma complexidade maior que o pageObject, isso nos faz pensar que se o time tiver dificuldades técnicas provavelmente este padrão pode ser um problema
@@ -1175,14 +1158,12 @@ Por exemplo, no caso do ator que deseja acessar uma URL (uma **Tarefa** chamada 
 Dentro da implementação, o método `abilityTo` é responsável por verificar se o ator possui a habilidade requerida para executar a tarefa ou responder à pergunta:
 
 ```tsx
-
 const browser = actor.abilityTo(BrowseTheWeb);
 ```
 
 Se o ator **não possuir** a habilidade `BrowseTheWeb`, ele **não poderá** executar a tarefa `NavigateTo` nem responder à pergunta `IsHeroTitleVisible`. Nesse caso, o método `abilityTo` lança um erro, garantindo que o teste não continue em um estado inconsistente.
 
 Essa estrutura garante que cada ator tenha explicitamente as permissões necessárias para as ações que irá realizar, promovendo clareza, segurança e organização no design dos testes.
-
 
 ### 6. Separando as interfaces.
 
@@ -1212,10 +1193,13 @@ export interface IAccountApiPort {
 export interface IDatabaseAdapter {
   connect(): Promise<void>;
   executeScript(scriptPath: string): Promise<any[]>;
-  replaceValuesAndExecuteScript(scriptPath: string, values: string[]): Promise<{ modifiedSql: string; rows: any[] }>;
+  replaceValuesAndExecuteScript(
+    scriptPath: string,
+    values: string[],
+  ): Promise<{ modifiedSql: string; rows: any[] }>;
   closeConnection(): Promise<void>;
-  query(sql: string, params?: any[]): Promise<any[]>
-  execute(sql: string, params?: any[]): void
+  query(sql: string, params?: any[]): Promise<any[]>;
+  execute(sql: string, params?: any[]): void;
 }
 ```
 
@@ -1234,7 +1218,6 @@ export type IDBConfig = {
 **src/interfaces/IQuestion.ts**
 
 ```tsx
-
 import { Actor } from "@screenplay/core/Actor";
 
 export interface IQuestion<T = any> {
@@ -1247,24 +1230,21 @@ export interface IQuestion<T = any> {
 
 ```tsx
 export interface IQuestionValidationOptions<T> {
-  invalidValues?: T[];           
-  errorMessage?: string;       
-  errorClass?: new (msg: string) => Error; 
+  invalidValues?: T[];
+  errorMessage?: string;
+  errorClass?: new (msg: string) => Error;
 }
-
 ```
 
 **src/interfaces/ITask.ts**
 
 ```tsx
-
 import { Actor } from "@screenplay/core/Actor";
 
 export interface ITask {
   performAs(actor: Actor): Promise<void>;
   stepName?(): string;
 }
-
 ```
 
 **src/interfaces/IUser.ts**
@@ -1333,10 +1313,7 @@ Agora vamos atualizar os tsconfig.json adicionando o path da interface:
       "@interfaces/*": ["src/interfaces/*"]
     }
   },
-  "include": [
-    "../src/**/*.ts",
-    "**/*.ts"
-  ],
+  "include": ["../src/**/*.ts", "**/*.ts"],
   "exclude": ["node_modules", "../dist"]
 }
 ```
@@ -1371,27 +1348,26 @@ export class Actor {
   }
 
   attemptsTo(...tasks: ITask[]) {
-    return Promise.all(tasks.map(task => task.performAs(this)));
+    return Promise.all(tasks.map((task) => task.performAs(this)));
   }
 
   asksFor<T>(question: IQuestion): Promise<T> {
     return question.answeredBy(this);
   }
 }
-
 ```
 
 **src/screenplay/tasks/NavigateTo.ts**
 
 ```tsx
-import { ITask } from '@framework/interfaces/ITask';
-import { BrowseTheWeb } from '@screenplay/abilities/BrowseTheWeb';
-import { Actor } from '../core/Actor';
+import { ITask } from "@framework/interfaces/ITask";
+import { BrowseTheWeb } from "@screenplay/abilities/BrowseTheWeb";
+import { Actor } from "../core/Actor";
 
 export class NavigateTo implements ITask {
   constructor(private url: string) {}
 
-  static theUrl(url: string = '/') {
+  static theUrl(url: string = "/") {
     return new NavigateTo(url);
   }
 
@@ -1405,10 +1381,10 @@ export class NavigateTo implements ITask {
 **src/screenplay/questions/IsHeroTitleVisible.ts**
 
 ```tsx
-import { expect } from '@playwright/test';
-import { BrowseTheWeb } from '@screenplay/abilities/BrowseTheWeb';
-import { Actor } from '@screenplay/core/Actor';
-import { IQuestion } from '@interfaces/IQuestion';
+import { expect } from "@playwright/test";
+import { BrowseTheWeb } from "@screenplay/abilities/BrowseTheWeb";
+import { Actor } from "@screenplay/core/Actor";
+import { IQuestion } from "@interfaces/IQuestion";
 
 export class IsHeroTitleVisible implements IQuestion {
   static onPage() {
@@ -1417,7 +1393,7 @@ export class IsHeroTitleVisible implements IQuestion {
 
   async answeredBy(actor: Actor): Promise<boolean> {
     const browser = actor.abilityTo(BrowseTheWeb);
-    const element = browser.page.getByTestId('hero-title');
+    const element = browser.page.getByTestId("hero-title");
     try {
       await expect(element).toBeVisible();
       return true;
@@ -1482,7 +1458,7 @@ TEST_MOBILE=false
 ```
 
 1. **Gerar e visualizar o relatório Allure**
-Após rodar os testes:
+   Após rodar os testes:
 
 ```bash
 npx allure generate allure-results --clean -o allure-report
@@ -1568,7 +1544,7 @@ Vamos criar uma classe para customizar o uso do allure. O report do allure preci
 **src/utils/AllureLogger.ts**
 
 ```tsx
-import { test } from '@playwright/test';
+import { test } from "@playwright/test";
 
 export class AllureLogger {
   static log(message: string) {
@@ -1584,19 +1560,19 @@ export class AllureLogger {
   }
 
   static error(message: string, error?: Error) {
-    console.error(`[ALLURE ERROR] ${message}`, error || '');
+    console.error(`[ALLURE ERROR] ${message}`, error || "");
     test.step(`❌ ${message}`, async () => {
       if (error) {
-        this.attachment('Error Details', error.stack || error.message, 'text/plain');
+        this.attachment("Error Details", error.stack || error.message, "text/plain");
       }
     });
   }
 
   static success(message: string, details?: any) {
-    console.info(`[ALLURE SUCCESS] ✅ ${message}`, details || '');
+    console.info(`[ALLURE SUCCESS] ✅ ${message}`, details || "");
     test.step(`✅ ${message}`, async () => {
       if (details) {
-        this.attachment('Success Details', JSON.stringify(details, null, 2), 'application/json');
+        this.attachment("Success Details", JSON.stringify(details, null, 2), "application/json");
       }
     });
   }
@@ -1616,7 +1592,7 @@ export class AllureLogger {
     const testInfo = test.info();
     if (testInfo) {
       await testInfo.attach(name, {
-        body: typeof content === 'string' ? Buffer.from(content, 'utf-8') : content,
+        body: typeof content === "string" ? Buffer.from(content, "utf-8") : content,
         contentType: type,
       });
     } else {
@@ -1627,10 +1603,10 @@ export class AllureLogger {
   static apiRequest(method: string, url: string, payload?: any) {
     const message = `API ${method.toUpperCase()} ${url}`;
     test.step(message, async () => {
-      this.attachment('Request URL', url, 'text/plain');
-      this.attachment('HTTP Method', method.toUpperCase(), 'text/plain');
+      this.attachment("Request URL", url, "text/plain");
+      this.attachment("HTTP Method", method.toUpperCase(), "text/plain");
       if (payload) {
-        this.attachment('Request Payload', JSON.stringify(payload, null, 2), 'application/json');
+        this.attachment("Request Payload", JSON.stringify(payload, null, 2), "application/json");
       }
     });
   }
@@ -1638,14 +1614,13 @@ export class AllureLogger {
   static apiResponse(statusCode: number, responseBody?: any) {
     const message = `API Response [${statusCode}]`;
     test.step(message, async () => {
-      this.attachment('Status Code', statusCode.toString(), 'text/plain');
+      this.attachment("Status Code", statusCode.toString(), "text/plain");
       if (responseBody) {
-        this.attachment('Response Body', JSON.stringify(responseBody, null, 2), 'application/json');
+        this.attachment("Response Body", JSON.stringify(responseBody, null, 2), "application/json");
       }
     });
   }
 }
-
 ```
 
 ## Allure Steps
@@ -1655,9 +1630,12 @@ Vamos também criar uma classe para os steps do allure, ela será similar a um w
 **src/utils/AllureStep.ts**
 
 ```tsx
-import { AllureLogger } from '@utils/AllureLogger';
+import { AllureLogger } from "@utils/AllureLogger";
 
-export function withAllureSteps<T extends { new(...args: any[]): {} }>(Base: T, stepNamePrefix?: string) {
+export function withAllureSteps<T extends { new (...args: any[]): {} }>(
+  Base: T,
+  stepNamePrefix?: string,
+) {
   return class extends Base {
     constructor(...args: any[]) {
       super(...args);
@@ -1665,15 +1643,15 @@ export function withAllureSteps<T extends { new(...args: any[]): {} }>(Base: T, 
       const propertyNames = Object.getOwnPropertyNames(Base.prototype);
 
       for (const propertyName of propertyNames) {
-        if (propertyName === 'constructor') continue;
+        if (propertyName === "constructor") continue;
 
         const originalMethod = (this as any)[propertyName];
-        if (typeof originalMethod === 'function') {
+        if (typeof originalMethod === "function") {
           (this as any)[propertyName] = async (...methodArgs: any[]) => {
             const stepName = stepNamePrefix
-              ? `${stepNamePrefix} - ${propertyName}(${methodArgs.map(a => JSON.stringify(a)).join(', ')})`
-              : `${propertyName}(${methodArgs.map(a => JSON.stringify(a)).join(', ')})`;
-            
+              ? `${stepNamePrefix} - ${propertyName}(${methodArgs.map((a) => JSON.stringify(a)).join(", ")})`
+              : `${propertyName}(${methodArgs.map((a) => JSON.stringify(a)).join(", ")})`;
+
             console.info(`${stepName} is being executed`);
             return AllureLogger.step(stepName, async () => {
               return await originalMethod.apply(this, methodArgs);
@@ -1684,7 +1662,6 @@ export function withAllureSteps<T extends { new(...args: any[]): {} }>(Base: T, 
     }
   };
 }
-
 ```
 
 ---
@@ -1703,10 +1680,13 @@ Como queremos algo genérico vamos criar uma interface para ser a porta de conex
 export interface IDatabaseAdapter {
   connect(): Promise<void>;
   executeScript(scriptPath: string): Promise<any[]>;
-  replaceValuesAndExecuteScript(scriptPath: string, values: string[]): Promise<{ modifiedSql: string; rows: any[] }>;
+  replaceValuesAndExecuteScript(
+    scriptPath: string,
+    values: string[],
+  ): Promise<{ modifiedSql: string; rows: any[] }>;
   closeConnection(): Promise<void>;
-  query(sql: string, params?: any[]): Promise<any[]>
-  execute(sql: string, params?: any[]): void
+  query(sql: string, params?: any[]): Promise<any[]>;
+  execute(sql: string, params?: any[]): void;
 }
 ```
 
@@ -1723,10 +1703,10 @@ npm i mysql2
 **src/adapters/database/MySQLAdapter.ts**
 
 ```tsx
-import mysql, { Connection, RowDataPacket } from 'mysql2/promise';
-import fs from 'fs';
-import { IDatabaseAdapter } from '@interfaces/IDatabaseAdapter';
-import { IDBConfig } from '@framework/interfaces/IDbConfig';
+import mysql, { Connection, RowDataPacket } from "mysql2/promise";
+import fs from "fs";
+import { IDatabaseAdapter } from "@interfaces/IDatabaseAdapter";
+import { IDBConfig } from "@framework/interfaces/IDbConfig";
 
 export class MySQLAdapter implements IDatabaseAdapter {
   private config: IDBConfig;
@@ -1753,30 +1733,33 @@ export class MySQLAdapter implements IDatabaseAdapter {
         return;
       } catch (err) {
         console.log(`Connection attempt failed: ${err}`);
-        await new Promise(res => setTimeout(res, this.INTERVAL));
+        await new Promise((res) => setTimeout(res, this.INTERVAL));
       }
     }
-    throw new Error('Failed to connect to database after timeout');
+    throw new Error("Failed to connect to database after timeout");
   }
 
   async executeScript(scriptPath: string): Promise<any[]> {
-    if (!this.connection) throw new Error('Not connected');
-    const sql = fs.readFileSync(scriptPath, 'utf-8').trim();
-    if (!sql) throw new Error('Script file is empty');
+    if (!this.connection) throw new Error("Not connected");
+    const sql = fs.readFileSync(scriptPath, "utf-8").trim();
+    if (!sql) throw new Error("Script file is empty");
     const [rows] = await this.connection.query<RowDataPacket[]>(sql);
     return Array.isArray(rows) ? rows : [];
   }
 
-  async replaceValuesAndExecuteScript(scriptPath: string, values: string[]): Promise<{ modifiedSql: string; rows: any[] }> {
-    if (!this.connection) throw new Error('Not connected');
-    let sql = fs.readFileSync(scriptPath, 'utf-8').trim();
+  async replaceValuesAndExecuteScript(
+    scriptPath: string,
+    values: string[],
+  ): Promise<{ modifiedSql: string; rows: any[] }> {
+    if (!this.connection) throw new Error("Not connected");
+    let sql = fs.readFileSync(scriptPath, "utf-8").trim();
 
     let i = 0;
     const modifiedSql = sql.replace(/\$\$/g, () => {
       if (i < values.length) {
         return values[i++];
       }
-      return '$$';
+      return "$$";
     });
 
     const [rows] = await this.connection.query<RowDataPacket[]>(modifiedSql);
@@ -1794,17 +1777,16 @@ export class MySQLAdapter implements IDatabaseAdapter {
   }
 
   async query(sql: string, params?: any[]): Promise<any[]> {
-    if (!this.connection) throw new Error('Not connected');
+    if (!this.connection) throw new Error("Not connected");
     const [rows] = await this.connection.query(sql, params);
     return Array.isArray(rows) ? rows : [];
   }
 
   async execute(sql: string, params?: any[]): Promise<void> {
-    if (!this.connection) throw new Error('Not connected');
+    if (!this.connection) throw new Error("Not connected");
     await this.connection.execute(sql, params);
   }
 }
-
 ```
 
 ## 3. Serivice para o Adapter
@@ -1828,7 +1810,7 @@ export class DbService {
       AllureLogger.attachment(
         "Resultado do script SQL",
         JSON.stringify(result, null, 2),
-        "application/json"
+        "application/json",
       );
       return result;
     });
@@ -1836,16 +1818,16 @@ export class DbService {
 
   async replaceValuesAndExecuteScript(scriptPath: string, values: string[]) {
     return test.step(`Executar script SQL com substituição de valores: ${scriptPath}`, async () => {
-      AllureLogger.info(
-        `Iniciando execução do script SQL com valores: ${values.join(", ")}`
+      AllureLogger.info(`Iniciando execução do script SQL com valores: ${values.join(", ")}`);
+      const { modifiedSql, rows } = await this.adapter.replaceValuesAndExecuteScript(
+        scriptPath,
+        values,
       );
-      const { modifiedSql, rows } =
-        await this.adapter.replaceValuesAndExecuteScript(scriptPath, values);
       AllureLogger.attachment("SQL modificado", modifiedSql, "text/plain");
       AllureLogger.attachment(
         "Resultado do script SQL",
         JSON.stringify(rows, null, 2),
-        "application/json"
+        "application/json",
       );
       return { modifiedSql, rows };
     });
@@ -1854,9 +1836,7 @@ export class DbService {
   async query(sql: string, params?: any[]) {
     return test.step(`Executar consulta SQL: ${sql}`, async () => {
       if (params && params.length > 0) {
-        AllureLogger.info(
-          `Executando consulta SQL com parâmetros: ${params.join(", ")}`
-        );
+        AllureLogger.info(`Executando consulta SQL com parâmetros: ${params.join(", ")}`);
       }
 
       const rows = await this.adapter.query(sql, params);
@@ -1865,7 +1845,7 @@ export class DbService {
         AllureLogger.attachment(
           "Parâmetros da consulta",
           JSON.stringify(params, null, 2),
-          "application/json"
+          "application/json",
         );
       }
       if (!rows || rows.length === 0) {
@@ -1877,21 +1857,18 @@ export class DbService {
 
   async execute(sql: string, params?: any[]) {
     return test.step(`Executar comando SQL: ${sql}`, async () => {
-      AllureLogger.info(
-        `Executando comando SQL com parâmetros: ${params?.join(", ")}`
-      );
+      AllureLogger.info(`Executando comando SQL com parâmetros: ${params?.join(", ")}`);
       const result = await this.adapter.execute(sql, params);
       AllureLogger.attachment("Comando SQL", sql, "text/plain");
       AllureLogger.attachment(
         "Parâmetros do comando",
         JSON.stringify(params, null, 2),
-        "application/json"
+        "application/json",
       );
       return result;
     });
   }
 }
-
 ```
 
 Lembrando que precisamos adicionar o services no path do projeto.
@@ -1913,10 +1890,9 @@ Como temos uma implementação do screenplay no projeto vamos criar uma Habilida
 **src/screenplay/abilities/AccessDatabase.ts**
 
 ```tsx
-
-import { IAbility } from '@framework/interfaces/IAbility';
-import { IDatabaseAdapter } from '@interfaces/IDatabaseAdapter';
-import { DbService } from '@services/DbService';
+import { IAbility } from "@framework/interfaces/IAbility";
+import { IDatabaseAdapter } from "@interfaces/IDatabaseAdapter";
+import { DbService } from "@services/DbService";
 
 export class AccessDatabase implements IAbility {
   constructor(private readonly service: DbService) {}
@@ -1929,7 +1905,6 @@ export class AccessDatabase implements IAbility {
     return this.service;
   }
 }
-
 ```
 
 ## 5. Agora vamos criar tasks para o ator
@@ -1939,9 +1914,9 @@ export class AccessDatabase implements IAbility {
 **tests/screenplay/tasks/ExecuteSqlScript.ts**
 
 ```tsx
-import { Actor } from '@screenplay/core/Actor';
-import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
-import { ITask } from '@interfaces/ITask';
+import { Actor } from "@screenplay/core/Actor";
+import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
+import { ITask } from "@interfaces/ITask";
 
 export class ExecuteSqlScript implements ITask {
   private scriptPath: string;
@@ -1959,7 +1934,6 @@ export class ExecuteSqlScript implements ITask {
     await db.executeScript(this.scriptPath);
   }
 }
-
 ```
 
 ### Task para executar script SQL com substituição de valores
@@ -1967,9 +1941,9 @@ export class ExecuteSqlScript implements ITask {
 **tests/screenplay/tasks/ExecuteSqlScriptWithValues.ts**
 
 ```tsx
-import { Actor } from '@screenplay/core/Actor';
-import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
-import { ITask } from '@interfaces/ITask';
+import { Actor } from "@screenplay/core/Actor";
+import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
+import { ITask } from "@interfaces/ITask";
 
 export class ExecuteSqlScriptWithValues implements ITask {
   private scriptPath: string;
@@ -1989,7 +1963,6 @@ export class ExecuteSqlScriptWithValues implements ITask {
     await db.replaceValuesAndExecuteScript(this.scriptPath, this.values);
   }
 }
-
 ```
 
 ## Criar Questions para o Ator
@@ -1999,8 +1972,8 @@ export class ExecuteSqlScriptWithValues implements ITask {
 **src/screenplay/questions/QueryDatabase.ts**
 
 ```tsx
-import { Question, Actor } from '@screenplay/core/Actor';
-import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
+import { Question, Actor } from "@screenplay/core/Actor";
+import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
 
 export class QueryDatabase implements Question<any[]> {
   private scriptPath: string;
@@ -2026,9 +1999,9 @@ export class QueryDatabase implements Question<any[]> {
 **tests/screenplay/questions/DoesDataExist.ts**
 
 ```tsx
-import { Actor } from '@screenplay/core/Actor';
-import { AccessDatabase } from '@screenplay/abilities/AccessDatabase';
-import { IQuestion } from '@framework/interfaces/IQuestion';
+import { Actor } from "@screenplay/core/Actor";
+import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
+import { IQuestion } from "@framework/interfaces/IQuestion";
 
 export class DoesDataExist implements IQuestion<any> {
   private rows: any[];
@@ -2041,12 +2014,11 @@ export class DoesDataExist implements IQuestion<any> {
     return new DoesDataExist(rows);
   }
 
-  async answeredBy(actor: Actor): Promise<any>{
+  async answeredBy(actor: Actor): Promise<any> {
     actor.abilityTo(AccessDatabase).db();
     return this.rows.length > 0;
   }
 }
-
 ```
 
 ---
@@ -2105,7 +2077,6 @@ services:
 
 volumes:
   mysql_data:
-
 ```
 
 Vamos Criar um arquivo .env para conter as variáveis de ambiente para conexão ao banco de dados.
@@ -2416,8 +2387,8 @@ Se observar nós estamos sobrescrevendo o test do playwright e exportando o mesm
 **src/fixtures/dbAdapter.ts**
 
 ```tsx
-import { MySQLAdapter } from '@framework/adapters/database/MySQLAdapter';
-import { test as base } from '@playwright/test';
+import { MySQLAdapter } from "@framework/adapters/database/MySQLAdapter";
+import { test as base } from "@playwright/test";
 
 const dbConfig = {
   DB_HOST: process.env.DB_HOST!,
@@ -2430,7 +2401,7 @@ const dbConfig = {
 export const test = base.extend<
   {},
   {
-    dbAdapter: MySQLAdapter
+    dbAdapter: MySQLAdapter;
   }
 >({
   dbAdapter: [
@@ -2439,9 +2410,10 @@ export const test = base.extend<
       await db.connect();
       await use(db);
       await db.closeConnection();
-    }, { scope: 'worker' }],
+    },
+    { scope: "worker" },
+  ],
 });
-
 ```
 
 ## Criando um teste para conexão com banco de dados
@@ -2451,22 +2423,21 @@ E o arquivo de teste para validar a conexão com o banco:
 **tests/Screenplay/connect_database.spec.ts**
 
 ```tsx
-import{ expect } from "@playwright/test";
+import { expect } from "@playwright/test";
 import { test } from "@framework/fixtures/dbAdapter";
 import { Actor } from "@screenplay/core/Actor";
 import { AccessDatabase } from "@screenplay/abilities/AccessDatabase";
 import { ExecuteSqlScript } from "@screenplay/tasks/ExecuteSqlScript";
 import { DoesDataExist } from "@screenplay/questions/DoesDataExist";
 
-test.describe('Connect Database - Screenplay', () => {
-  test('Should Be Possible Connect Database', async ({ dbAdapter }) => {
-    const actor = new Actor('Tester').whoCan(AccessDatabase.using(dbAdapter));
-    const scriptResult = await actor.attemptsTo(ExecuteSqlScript.fromFile('src/sql/test.sql'))
-    const hasRows = await actor.asksFor(DoesDataExist.fromRows(scriptResult))
+test.describe("Connect Database - Screenplay", () => {
+  test("Should Be Possible Connect Database", async ({ dbAdapter }) => {
+    const actor = new Actor("Tester").whoCan(AccessDatabase.using(dbAdapter));
+    const scriptResult = await actor.attemptsTo(ExecuteSqlScript.fromFile("src/sql/test.sql"));
+    const hasRows = await actor.asksFor(DoesDataExist.fromRows(scriptResult));
     expect(hasRows).toBeTruthy();
   });
-})
-
+});
 ```
 
 Se executar os testes verá que termos uma conexão, validamos um dado do banco e fechamos a conexão.
@@ -2487,9 +2458,8 @@ Garante o retorno de uma instância ou a criação de uma nova.
 **tests/adapters/DatabaseConnection.ts**
 
 ```tsx
-
-import { IDBConfig } from '@framework/interfaces/IDbConfig';
-import { MySQLAdapter } from './MySQLAdapter';
+import { IDBConfig } from "@framework/interfaces/IDbConfig";
+import { MySQLAdapter } from "./MySQLAdapter";
 
 let instance: MySQLAdapter | null = null;
 
@@ -2523,7 +2493,6 @@ async function globalSetup() {
 }
 
 export default globalSetup;
-
 ```
 
 **tests/global-teardown.ts**
@@ -2538,7 +2507,6 @@ async function globalTeardown() {
 }
 
 export default globalTeardown;
-
 ```
 
 ## Implementação para conexão nos testes com pageObject
@@ -2550,8 +2518,8 @@ Uma outra implementação que é bastante utilizada são os respositories, eles 
 **src/repositories/UserRepository.ts**
 
 ```tsx
-import { DbService } from '@services/DbService';
-import { AllureLogger } from '@utils/AllureLogger';
+import { DbService } from "@services/DbService";
+import { AllureLogger } from "@utils/AllureLogger";
 
 export interface User {
   id: number;
@@ -2564,30 +2532,32 @@ export class UserRepository {
 
   async getUserById(id: number): Promise<User | null> {
     return AllureLogger.step(`Buscar usuário pelo ID: ${id}`, async () => {
-      const rows = await this.dbService.query('SELECT * FROM users WHERE id = ?', [id]);
+      const rows = await this.dbService.query("SELECT * FROM users WHERE id = ?", [id]);
       return rows.length > 0 ? (rows[0] as User) : null;
     });
   }
 
   async insertUser(username: string, email: string): Promise<void> {
     return AllureLogger.step(`Inserir usuário: ${username}`, async () => {
-      await this.dbService.execute('INSERT INTO users (username, email) VALUES (?, ?)', [username, email]);
+      await this.dbService.execute("INSERT INTO users (username, email) VALUES (?, ?)", [
+        username,
+        email,
+      ]);
     });
   }
 
   async updateUserEmail(id: number, newEmail: string): Promise<void> {
     return AllureLogger.step(`Atualizar email do usuário ID: ${id}`, async () => {
-      await this.dbService.execute('UPDATE users SET email = ? WHERE id = ?', [newEmail, id]);
+      await this.dbService.execute("UPDATE users SET email = ? WHERE id = ?", [newEmail, id]);
     });
   }
 
   async deleteUser(id: number): Promise<void> {
     return AllureLogger.step(`Deletar usuário ID: ${id}`, async () => {
-      await this.dbService.execute('DELETE FROM users WHERE id = ?', [id]);
+      await this.dbService.execute("DELETE FROM users WHERE id = ?", [id]);
     });
   }
 }
-
 ```
 
 ### Atualizar o tsconfg.json
@@ -2617,13 +2587,9 @@ Vamos adicionar os novos paths
       "@repositories/*": ["src/repositories/*"]
     }
   },
-  "include": [
-    "../src/**/*.ts",
-    "**/*.ts"
-  ],
+  "include": ["../src/**/*.ts", "**/*.ts"],
   "exclude": ["node_modules", "../dist"]
 }
-
 ```
 
 **tsconfig.json**
@@ -2660,7 +2626,6 @@ Vamos adicionar os novos paths
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist", "tests"]
 }
-
 ```
 
 ---
@@ -2751,13 +2716,12 @@ export class ApiError extends Error {
   constructor(
     public readonly statusCode: number,
     public readonly endpoint: string,
-    message: string
+    message: string,
   ) {
     super(`API Error [${statusCode}] ${endpoint}: ${message}`);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }
-
 ```
 
 Lembre de adicionar o path de errors nos tsconfig.json
@@ -2779,7 +2743,6 @@ Vamos atualizar nosso actor para capturar e inserir logs tanto no console do ter
 **src/screenplay/core/Actor.ts**
 
 ```tsx
-
 import { test } from "@playwright/test";
 import { AllureLogger } from "@utils/AllureLogger";
 import { TaskFailedError, QuestionValidationError } from "@errors/TestErrors";
@@ -2790,7 +2753,7 @@ import { ITask } from "@framework/interfaces/ITask";
 
 export class Actor {
   private abilities = new Map<Function, IAbility>();
-  private static indent = "  "; 
+  private static indent = "  ";
 
   constructor(public name: string) {}
 
@@ -2816,41 +2779,34 @@ export class Actor {
   async attemptsTo(...tasks: ITask[]) {
     return Promise.all(
       tasks.map((task) =>
-        test.step(
-          task.stepName?.() || `Task: ${task.constructor.name}`,
-          async () => {
-            const stepName = task.stepName?.() || task.constructor.name;
-            const testName = test.info().title;
-            console.info(
-              `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Iniciando Task: ${stepName}`
-            );
-            AllureLogger.info(`Iniciando Task: ${stepName}`);
+        test.step(task.stepName?.() || `Task: ${task.constructor.name}`, async () => {
+          const stepName = task.stepName?.() || task.constructor.name;
+          const testName = test.info().title;
+          console.info(
+            `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Iniciando Task: ${stepName}`,
+          );
+          AllureLogger.info(`Iniciando Task: ${stepName}`);
 
-            try {
-              await task.performAs(this);
-              console.info(
-                `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Task concluída: ${stepName}`
-              );
-              AllureLogger.success(`Task concluída: ${stepName}`);
-            } catch (error) {
-              console.error(
-                `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] `,
-                error
-              );
-              throw new TaskFailedError(stepName, (error as Error).message);
-            }
+          try {
+            await task.performAs(this);
+            console.info(
+              `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Task concluída: ${stepName}`,
+            );
+            AllureLogger.success(`Task concluída: ${stepName}`);
+          } catch (error) {
+            console.error(`${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] `, error);
+            throw new TaskFailedError(stepName, (error as Error).message);
           }
-        )
-      )
+        }),
+      ),
     );
   }
 
   async asksFor<T extends string | number | boolean | null | undefined>(
     question: IQuestion<T>,
-    options?: IQuestionValidationOptions<T>
+    options?: IQuestionValidationOptions<T>,
   ): Promise<T> {
-    const invalidValues =
-      options?.invalidValues ?? ([false, null, undefined] as T[]);
+    const invalidValues = options?.invalidValues ?? ([false, null, undefined] as T[]);
     const ErrorClass = options?.errorClass ?? QuestionValidationError;
 
     return test.step(
@@ -2859,7 +2815,7 @@ export class Actor {
         const stepName = question.stepName?.() || question.constructor.name;
         const testName = test.info().title;
         console.info(
-          `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Respondendo Question: ${stepName}`
+          `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Respondendo Question: ${stepName}`,
         );
         AllureLogger.info(`Respondendo Question: ${stepName}`);
 
@@ -2868,31 +2824,26 @@ export class Actor {
 
           if (invalidValues.includes(result)) {
             const errorMessage =
-              options?.errorMessage ??
-              `Question "${stepName}" retornou valor inválido: ${result}`;
+              options?.errorMessage ?? `Question "${stepName}" retornou valor inválido: ${result}`;
             console.error(
-              `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] ${errorMessage}`
+              `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] ${errorMessage}`,
             );
             throw new ErrorClass(stepName, errorMessage);
           }
 
           console.info(
-            `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Question respondida: ${stepName} = ${result}`
+            `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] Question respondida: ${stepName} = ${result}`,
           );
           AllureLogger.success(`Question respondida: ${stepName}`);
           return result;
         } catch (error) {
-          console.error(
-            `${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] `,
-            error
-          );
+          console.error(`${Actor.indent}[Test: ${testName}] [Actor: ${this.name}] `, error);
           throw error;
         }
-      }
+      },
     );
   }
 }
-
 ```
 
 ## Atualizando o arquivo home (PageObject)
@@ -2903,7 +2854,7 @@ Para o page object a atualização é menos custosa, neste caso vamos apenas uti
 
 ```tsx
 import { Page, expect } from "@playwright/test";
-import { withAllureSteps } from "@utils/AllureStep"
+import { withAllureSteps } from "@utils/AllureStep";
 
 class HomePageBase {
   readonly page: Page;
@@ -2916,14 +2867,12 @@ class HomePageBase {
     await this.page.goto(url);
   }
 
-  
   async expectHeroTitleVisible(title: string): Promise<void> {
     await expect(this.page.getByTestId("hero-title")).toHaveText(title);
   }
 }
 
-export const HomePage = withAllureSteps(HomePageBase, 'HomePage');
-
+export const HomePage = withAllureSteps(HomePageBase, "HomePage");
 ```
 
 Teremos também uma atualização no arquivo de teste apenas para identificar a instância da page.
@@ -2946,7 +2895,6 @@ test.describe("Home Page Tests - Page Object", () => {
     await homePage.expectHeroTitleVisible("Test Automation Practice");
   });
 });
-
 ```
 
 ---
@@ -2975,9 +2923,7 @@ export class DemoQAAccountApiAdapter implements IAccountApiPort {
     const endpoint = `${this.baseUrl}/User`;
 
     try {
-      AllureLogger.info(
-        `Enviando requisição para criar usuário: { username: ${user.userName} }`
-      );
+      AllureLogger.info(`Enviando requisição para criar usuário: { username: ${user.userName} }`);
 
       const response = await this.request.post(endpoint, {
         headers: {
@@ -2994,19 +2940,18 @@ export class DemoQAAccountApiAdapter implements IAccountApiPort {
 
       if (!response.ok()) {
         AllureLogger.error(
-          `Falha na criação de usuário - Status: ${response.status()} - Detalhes: ${JSON.stringify(responseBody)}`
+          `Falha na criação de usuário - Status: ${response.status()} - Detalhes: ${JSON.stringify(responseBody)}`,
         );
 
         throw new ApiError(
           response.status(),
           endpoint,
-          responseBody?.message ||
-            `HTTP ${response.status()}: ${JSON.stringify(responseBody)}`
+          responseBody?.message || `HTTP ${response.status()}: ${JSON.stringify(responseBody)}`,
         );
       }
 
       AllureLogger.info(
-        `Usuário criado com sucesso via API: { username: ${responseBody.username}, userID: ${responseBody.userID} }`
+        `Usuário criado com sucesso via API: { username: ${responseBody.username}, userID: ${responseBody.userID} }`,
       );
 
       return responseBody;
@@ -3015,18 +2960,11 @@ export class DemoQAAccountApiAdapter implements IAccountApiPort {
         throw error;
       }
 
-      AllureLogger.error(
-        `Erro inesperado ao criar usuário: ${(error as Error).message}`
-      );
-      throw new ApiError(
-        0,
-        endpoint,
-        `Unexpected error: ${(error as Error).message}`
-      );
+      AllureLogger.error(`Erro inesperado ao criar usuário: ${(error as Error).message}`);
+      throw new ApiError(0, endpoint, `Unexpected error: ${(error as Error).message}`);
     }
   }
 }
-
 ```
 
 Vamos criar uma nova habilidade para nosso actor.
@@ -3034,7 +2972,6 @@ Vamos criar uma nova habilidade para nosso actor.
 **src/screenplay/abilities/CallAccountService.ts**
 
 ```tsx
-
 import { IAbility } from "@framework/interfaces/IAbility";
 import { IAccountApiPort } from "@interfaces/IAccountApiPort";
 
@@ -3053,7 +2990,6 @@ export class CallAccountService implements IAbility {
     return this.accountService;
   }
 }
-
 ```
 
 Agora criaremos uma task para realizar o registro do user.
@@ -3061,11 +2997,10 @@ Agora criaremos uma task para realizar o registro do user.
 **src/screenplay/tasks/CreateUserViaService.ts**
 
 ```tsx
-
-import { Actor } from '@screenplay/core/Actor';
-import { CallAccountService } from '@screenplay/abilities/CallAccountService';
-import { IUser } from '@interfaces/IUser';
-import { ITask } from '@framework/interfaces/ITask';
+import { Actor } from "@screenplay/core/Actor";
+import { CallAccountService } from "@screenplay/abilities/CallAccountService";
+import { IUser } from "@interfaces/IUser";
+import { ITask } from "@framework/interfaces/ITask";
 
 /**
  * Task simples para criar um usuário via Service
@@ -3094,13 +3029,11 @@ export class CreateUserViaService implements ITask {
 
       // Armazenar resposta no contexto do ator
       (actor as any).lastUserCreationResponse = response;
-
     } catch (error) {
       throw error;
     }
   }
 }
-
 ```
 
 Vamos criar uma question para validações
@@ -3127,8 +3060,7 @@ export class ServiceValidationsWereApplied implements IQuestion<boolean> {
   }
 
   async answeredBy(actor: Actor): Promise<boolean> {
-    const creationResponse = (actor as any)
-      .lastUserCreationResponse as IUserCreationResponse;
+    const creationResponse = (actor as any).lastUserCreationResponse as IUserCreationResponse;
 
     if (!creationResponse) {
       return false;
@@ -3136,21 +3068,16 @@ export class ServiceValidationsWereApplied implements IQuestion<boolean> {
 
     const validations = {
       hasValidUsername: creationResponse.username === this.expectedUserName,
-      hasValidUserId: !!(
-        creationResponse.userID && creationResponse.userID.trim() !== ""
-      ),
+      hasValidUserId: !!(creationResponse.userID && creationResponse.userID.trim() !== ""),
       hasBooksArray: Array.isArray(creationResponse.books),
       usernameMatches: creationResponse.username === this.expectedUserName,
     };
 
-    const allValidationsPassed = Object.values(validations).every(
-      (v) => v === true
-    );
+    const allValidationsPassed = Object.values(validations).every((v) => v === true);
 
     return allValidationsPassed;
   }
 }
-
 ```
 
 Vamos agora criar um service para não utilizarmos o adapter diretamente.
@@ -3193,20 +3120,15 @@ export class AccountService implements IAccountApiPort {
     // Validações específicas do DemoQA
     if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(userData.password)) {
       throw new Error(
-        "Password deve conter pelo menos: 1 maiúscula, 1 número, 1 caractere especial"
+        "Password deve conter pelo menos: 1 maiúscula, 1 número, 1 caractere especial",
       );
     }
   }
 
-  private async logUserCreation(
-    response: IUserCreationResponse
-  ): Promise<void> {
-    AllureLogger.info(
-      `[SERVICE] Usuário registrado no sistema - ${response.username}`
-    );
+  private async logUserCreation(response: IUserCreationResponse): Promise<void> {
+    AllureLogger.info(`[SERVICE] Usuário registrado no sistema - ${response.username}`);
   }
 }
-
 ```
 
 ---
@@ -3218,7 +3140,6 @@ Para o teste com screenplay vemos que utilizamos inversão de dependências e pa
 **tests/Screenplay/account_api.spec.ts**
 
 ```tsx
-
 import { DemoQAAccountApiAdapter } from "@framework/adapters/api/DemoQAAccountApiAdapter";
 import { IAccountApiPort } from "@interfaces/IAccountApiPort";
 import { test, expect } from "@playwright/test";
@@ -3240,22 +3161,16 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
     accountService = new AccountService(apiAdapter);
 
     // 3. Actor com habilidade de usar Service
-    actor = Actor.named("API Tester").whoCan(
-      CallAccountService.using(accountService)
-    );
+    actor = Actor.named("API Tester").whoCan(CallAccountService.using(accountService));
   });
 
   test("Must register user using Service with business validations", async () => {
     const userName = `serviceuser_${Date.now()}`;
     const password = "784512Asd!";
 
-    await actor.attemptsTo(
-      CreateUserViaService.withCredentials(userName, password)
-    );
+    await actor.attemptsTo(CreateUserViaService.withCredentials(userName, password));
 
-    const validationsApplied = await actor.asksFor(
-      ServiceValidationsWereApplied.for(userName)
-    );
+    const validationsApplied = await actor.asksFor(ServiceValidationsWereApplied.for(userName));
 
     expect(validationsApplied).toBe(true);
 
@@ -3271,9 +3186,7 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
 
     // Service deve falhar na validação antes mesmo de chamar o Adapter
     await expect(
-      actor.attemptsTo(
-        CreateUserViaService.withCredentials(userName, invalidPassword)
-      )
+      actor.attemptsTo(CreateUserViaService.withCredentials(userName, invalidPassword)),
     ).rejects.toThrow("Password deve ter pelo menos 6 caracteres");
   });
 
@@ -3283,9 +3196,7 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
 
     // Service deve falhar na validação de username vazio
     await expect(
-      actor.attemptsTo(
-        CreateUserViaService.withCredentials(emptyUserName, password)
-      )
+      actor.attemptsTo(CreateUserViaService.withCredentials(emptyUserName, password)),
     ).rejects.toThrow("Username é obrigatório");
   });
 
@@ -3294,17 +3205,14 @@ test.describe("DemoQA Account API Tests - Service Layer Architecture", () => {
     const password = "784512Asd!";
 
     // Criar primeiro usuário
-    await actor.attemptsTo(
-      CreateUserViaService.withCredentials(userName, password)
-    );
+    await actor.attemptsTo(CreateUserViaService.withCredentials(userName, password));
 
     // Tentar criar usuário duplicado deve falhar
     await expect(
-      actor.attemptsTo(CreateUserViaService.withCredentials(userName, password))
+      actor.attemptsTo(CreateUserViaService.withCredentials(userName, password)),
     ).rejects.toThrow();
   });
 });
-
 ```
 
 ## Teste com page object
@@ -3314,7 +3222,6 @@ No page object como não temos ability passamos o adapter para o service e utili
 **tests/PageObject/account_api.spec.ts**
 
 ```tsx
-
 import { DemoQAAccountApiAdapter } from "@framework/adapters/api/DemoQAAccountApiAdapter";
 import { IAccountApiPort } from "@interfaces/IAccountApiPort";
 import { IUser } from "@interfaces/IUser";
@@ -3365,7 +3272,6 @@ test.describe("DemoQA Account API Tests - Page Object Pattern", () => {
     await expect(accountService.createUser(user)).rejects.toThrow();
   });
 });
-
 ```
 
 # Atualizando as configurações globais do projeto
@@ -3394,26 +3300,20 @@ const requiredEnvVars = ["BASE_URL"];
 for (const varName of requiredEnvVars) {
   if (!process.env[varName]) {
     throw new Error(
-      `Variável de ambiente obrigatória ${varName} não está definida para o ambiente ${ENV}`
+      `Variável de ambiente obrigatória ${varName} não está definida para o ambiente ${ENV}`,
     );
   }
 }
 
 function parseTraceMode(value?: string): TraceMode | undefined {
-  const valid: TraceMode[] = [
-    "off",
-    "on",
-    "on-first-retry",
-    "retain-on-failure",
-  ];
+  const valid: TraceMode[] = ["off", "on", "on-first-retry", "retain-on-failure"];
   if (value && valid.includes(value as TraceMode)) return value as TraceMode;
   return undefined;
 }
 
 function parseScreenshotMode(value?: string): ScreenshotMode | undefined {
   const valid: ScreenshotMode[] = ["off", "on", "only-on-failure"];
-  if (value && valid.includes(value as ScreenshotMode))
-    return value as ScreenshotMode;
+  if (value && valid.includes(value as ScreenshotMode)) return value as ScreenshotMode;
   return undefined;
 }
 
@@ -3424,9 +3324,7 @@ function parseVideoMode(value?: string): VideoMode | undefined {
 }
 
 function parseReport(): string | ReporterDescription[] {
-  const reporters = process.env.REPORTER?.split(",").map((r) => r.trim()) || [
-    "html",
-  ];
+  const reporters = process.env.REPORTER?.split(",").map((r) => r.trim()) || ["html"];
 
   if (reporters.length === 1) {
     const [name, options] = parseReporterWithOptions(reporters[0]);
@@ -3446,16 +3344,19 @@ function parseReporterWithOptions(input: string): [string, any?] {
   const [name, opts] = input.split(":");
   if (!opts) return [name];
 
-  const options = opts.split(";").reduce((acc, pair) => {
-    const [key, value] = pair.split("=");
-    if (key && value !== undefined) {
-      if (value === "true") acc[key] = true;
-      else if (value === "false") acc[key] = false;
-      else if (!isNaN(Number(value))) acc[key] = Number(value);
-      else acc[key] = value;
-    }
-    return acc;
-  }, {} as Record<string, any>);
+  const options = opts.split(";").reduce(
+    (acc, pair) => {
+      const [key, value] = pair.split("=");
+      if (key && value !== undefined) {
+        if (value === "true") acc[key] = true;
+        else if (value === "false") acc[key] = false;
+        else if (!isNaN(Number(value))) acc[key] = Number(value);
+        else acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
 
   return [name, options];
 }
@@ -3510,7 +3411,6 @@ const config: PlaywrightTestConfig = defineConfig({
 });
 
 export default config;
-
 ```
 
 E nosso arquivo de variáveis de ambiente deve ficar semelhante a:
@@ -3552,7 +3452,6 @@ Lembrando que podemos adicionar mais configurações conforme nossa necessidade.
 ---
 
 ## Estrutura do Projeto
-
 
     ├── src
     │   ├── adapters
@@ -3618,11 +3517,10 @@ Lembrando que podemos adicionar mais configurações conforme nossa necessidade.
     │   │   └── home.spec.ts
     │   ├── tsconfig.json
 
-
-
 ---
 
 ### **src/ — Núcleo do framework de testes**
+
 Aqui está localizado o framework em si, ou seja, toda a infraestrutura, lógica de negócio e suporte que tornam os testes reutilizáveis, independentes e organizados.
 
 Ele traz a separação entre infraestrutura (adapters), contratos (interfaces), serviços, padrões de automação (page objects, screenplay) e utilidades.
@@ -3630,6 +3528,7 @@ Ele traz a separação entre infraestrutura (adapters), contratos (interfaces), 
 ---
 
 ### **adapters/ — Pontos de integração com sistemas externos**
+
 Responsável por implementar as “portas” definidas em interfaces, conectando o framework a recursos externos.
 
 ---
@@ -3642,23 +3541,26 @@ Responsável por implementar as “portas” definidas em interfaces, conectando
 
 - **pages/**
   - **HomePage.ts**→ Implementa o Page Object Model (POM) para a página Home.
-É a camada que encapsula interação com a interface da aplicação web.
+    É a camada que encapsula interação com a interface da aplicação web.
 
 Resumo: os adapters são implementações concretas de integração, mas desacopladas do domínio. Se amanhã fosse necessário mudar de MySQL para PostgreSQL ou trocar a API DemoQA por outra, apenas os adapters mudariam.
 
 ---
 
 ### **errors/ — Tratamento estruturado de erros**
-  - **TestErrors.ts** → Define erros customizados (ex.: TaskFailedError, DatabaseConnectionError, etc.).
+
+- **TestErrors.ts** → Define erros customizados (ex.: TaskFailedError, DatabaseConnectionError, etc.).
 
 Isso profissionaliza o tratamento de falhas, permitindo relatórios mais claros no Allure e logs mais úteis para debugging.
 
 ### **fixtures/ — Injeção de dependências para os testes**
+
 - **dbAdapter.ts**→ Cria fixtures customizadas do Playwright, injetando instâncias de banco de dados por worker de teste.
 
 Garante que testes possam consumir dependências configuradas sem precisar instanciá-las repetidamente.
 
 ### **interfaces/ — Contratos e abstrações**
+
 Define portas (ports) que devem ser implementadas pelos adapters e consumidas pelos services.
 
 Principais contratos:
@@ -3674,7 +3576,8 @@ Principais contratos:
 Resumo: garantem desacoplamento entre domínio, serviços e infraestrutura.
 
 ### **repositories/ — Acesso especializado a entidades**
-  - **UserRepository.ts** → Implementa acesso a entidade Usuário no banco de dados, aplicando regras específicas (CRUD, buscas).
+
+- **UserRepository.ts** → Implementa acesso a entidade Usuário no banco de dados, aplicando regras específicas (CRUD, buscas).
 
 Diferença para o DbService:
 
@@ -3686,20 +3589,24 @@ Diferença para o DbService:
 Promovendo a separação de responsabilidades e reutilização de código.
 
 **abilities/**
+
 - **BrowseTheWeb.ts** → Permite ao ator navegar no browser.
 - **AccessDatabase.ts**→ Concede habilidade de interagir com bancos via DbService.
 - **CallAccountService.ts** → Dá acesso ao serviço de API do domínio.
 
 **core/**
+
 - **Actor.ts** → Classe principal do padrão Screenplay.
   - Permite ao ator executar tarefas (ITask) e responder perguntas (IQuestion), desde que possua as habilidades necessárias (IAbility).
 
 **tasks/**
+
 - **NavigateTo.ts**→ Navegar para uma URL.
 - **ExecuteSqlScript.ts** e ExecuteSqlScriptWithValues.ts → Executar consultas SQL.
 - **CreateUserViaService.ts** → Criar usuário via serviço de API.
 
 **questions/**
+
 - **IsHeroTitleVisible.ts**→ Validação na UI via Playwright.
 - **DoesDataExist.ts** → Valida se um dataset retornado do banco contém registros.
 - **QueryDatabase.ts** → Consulta banco de dados.
@@ -3708,27 +3615,31 @@ Promovendo a separação de responsabilidades e reutilização de código.
 Resumo: traduz o comportamento do usuário/sistema em um DSL (linguagem de alto nível) para automação de testes.
 
 ### **services/ — Regras de negócio e orquestração**
+
 - **AccountService.ts** → Centraliza regras para criação/validação de usuários via API.
-Não chama o adapter diretamente: aplica lógicas de validação e negócio antes/depois.
+  Não chama o adapter diretamente: aplica lógicas de validação e negócio antes/depois.
 - **DbService.ts** → Camada intermediária entre testes/repos e o adapter de banco.
-Aplica padronização (ex.: logs, attachments no Allure, trace).
-Resumo: abstraem a infraestrutura para um nível de domínio mais expressivo.
+  Aplica padronização (ex.: logs, attachments no Allure, trace).
+  Resumo: abstraem a infraestrutura para um nível de domínio mais expressivo.
 
 ### **sql/ — Scripts SQL reutilizáveis**
+
 Scripts versionados para seed/setup/execução em testes.
 
 **test.sql**→ consulta completa de usuários.
 **users_replace.sql** → consulta parametrizada com placeholders ($$).
 
 ### **utils/ — Utilitários do framework**
+
 - **AllureLogger.ts** → Facilita registrar steps, anexos e mensagens customizadas no Allure.
 - **AllureStep.ts** → Decorator para adicionar automaticamente steps Allure em métodos de classes (ex.: PageObjects).
 
 ### **tests/ — Suites de testes**
+
 Aqui ficam os testes automatizados em si, separados por padrão de implementação.
 
 - **global-setup.ts / global-teardown.ts**
-Executados antes/depois da suite de testes para configurar recursos globais (ex.: abrir e fechar conexões com banco).
+  Executados antes/depois da suite de testes para configurar recursos globais (ex.: abrir e fechar conexões com banco).
 
 - **PageObject/**
   - **home.spec.ts** → Testes da Home usando POM.

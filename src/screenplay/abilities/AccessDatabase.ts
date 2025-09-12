@@ -1,7 +1,6 @@
-
-import { IAbility } from '@framework/interfaces/IAbility';
-import { IDatabaseAdapter } from '@interfaces/IDatabaseAdapter';
-import { DbService } from '@services/DbService';
+import { IAbility } from "@framework/interfaces/IAbility";
+import { IDatabaseAdapter } from "@interfaces/IDatabaseAdapter";
+import { DbService } from "@services/DbService";
 
 export class AccessDatabase implements IAbility {
   constructor(private readonly service: DbService) {}

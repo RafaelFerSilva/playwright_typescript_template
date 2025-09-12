@@ -1,5 +1,5 @@
-import { MySQLAdapter } from '@framework/adapters/database/MySQLAdapter';
-import { test as base } from '@playwright/test';
+import { MySQLAdapter } from "@framework/adapters/database/MySQLAdapter";
+import { test as base } from "@playwright/test";
 
 const dbConfig = {
   DB_HOST: process.env.DB_HOST!,
@@ -12,7 +12,7 @@ const dbConfig = {
 export const test = base.extend<
   {},
   {
-    dbAdapter: MySQLAdapter
+    dbAdapter: MySQLAdapter;
   }
 >({
   dbAdapter: [
@@ -21,5 +21,7 @@ export const test = base.extend<
       await db.connect();
       await use(db);
       await db.closeConnection();
-    }, { scope: 'worker' }],
+    },
+    { scope: "worker" },
+  ],
 });

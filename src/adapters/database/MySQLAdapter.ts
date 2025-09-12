@@ -1,7 +1,7 @@
-import mysql, { Connection, RowDataPacket } from 'mysql2/promise';
-import fs from 'fs';
-import { IDatabaseAdapter } from '@interfaces/IDatabaseAdapter';
-import { IDBConfig } from '@framework/interfaces/IDbConfig';
+import mysql, { Connection, RowDataPacket } from "mysql2/promise";
+import fs from "fs";
+import { IDatabaseAdapter } from "@interfaces/IDatabaseAdapter";
+import { IDBConfig } from "@framework/interfaces/IDbConfig";
 
 export class MySQLAdapter implements IDatabaseAdapter {
   private config: IDBConfig;
@@ -28,30 +28,33 @@ export class MySQLAdapter implements IDatabaseAdapter {
         return;
       } catch (err) {
         console.log(`Connection attempt failed: ${err}`);
-        await new Promise(res => setTimeout(res, this.INTERVAL));
+        await new Promise((res) => setTimeout(res, this.INTERVAL));
       }
     }
-    throw new Error('Failed to connect to database after timeout');
+    throw new Error("Failed to connect to database after timeout");
   }
 
   async executeScript(scriptPath: string): Promise<any[]> {
-    if (!this.connection) throw new Error('Not connected');
-    const sql = fs.readFileSync(scriptPath, 'utf-8').trim();
-    if (!sql) throw new Error('Script file is empty');
+    if (!this.connection) throw new Error("Not connected");
+    const sql = fs.readFileSync(scriptPath, "utf-8").trim();
+    if (!sql) throw new Error("Script file is empty");
     const [rows] = await this.connection.query<RowDataPacket[]>(sql);
     return Array.isArray(rows) ? rows : [];
   }
 
-  async replaceValuesAndExecuteScript(scriptPath: string, values: string[]): Promise<{ modifiedSql: string; rows: any[] }> {
-    if (!this.connection) throw new Error('Not connected');
-    let sql = fs.readFileSync(scriptPath, 'utf-8').trim();
+  async replaceValuesAndExecuteScript(
+    scriptPath: string,
+    values: string[],
+  ): Promise<{ modifiedSql: string; rows: any[] }> {
+    if (!this.connection) throw new Error("Not connected");
+    let sql = fs.readFileSync(scriptPath, "utf-8").trim();
 
     let i = 0;
     const modifiedSql = sql.replace(/\$\$/g, () => {
       if (i < values.length) {
         return values[i++];
       }
-      return '$$';
+      return "$$";
     });
 
     const [rows] = await this.connection.query<RowDataPacket[]>(modifiedSql);
@@ -69,13 +72,13 @@ export class MySQLAdapter implements IDatabaseAdapter {
   }
 
   async query(sql: string, params?: any[]): Promise<any[]> {
-    if (!this.connection) throw new Error('Not connected');
+    if (!this.connection) throw new Error("Not connected");
     const [rows] = await this.connection.query(sql, params);
     return Array.isArray(rows) ? rows : [];
   }
 
   async execute(sql: string, params?: any[]): Promise<void> {
-    if (!this.connection) throw new Error('Not connected');
+    if (!this.connection) throw new Error("Not connected");
     await this.connection.execute(sql, params);
   }
 }

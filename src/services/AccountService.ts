@@ -33,16 +33,12 @@ export class AccountService implements IAccountApiPort {
     // Validações específicas do DemoQA
     if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(userData.password)) {
       throw new Error(
-        "Password deve conter pelo menos: 1 maiúscula, 1 número, 1 caractere especial"
+        "Password deve conter pelo menos: 1 maiúscula, 1 número, 1 caractere especial",
       );
     }
   }
 
-  private async logUserCreation(
-    response: IUserCreationResponse
-  ): Promise<void> {
-    AllureLogger.info(
-      `[SERVICE] Usuário registrado no sistema - ${response.username}`
-    );
+  private async logUserCreation(response: IUserCreationResponse): Promise<void> {
+    AllureLogger.info(`[SERVICE] Usuário registrado no sistema - ${response.username}`);
   }
 }
