@@ -1,4 +1,4 @@
-name: CI
+name: CI (init_db.py)
 
 on:
   push:
@@ -21,42 +21,49 @@ jobs:
           MYSQL_USER: testuser
           MYSQL_PASSWORD: testpassword
         options: >-
-          --health-cmd="mysqladmin ping --protocol=tcp --user=root --password=rootpassword"
+          --health-cmd="mysqladmin ping --host=localhost --user=root --password=rootpassword"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=15
-        volumes:
-          - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+          --health-retries=10
 
     steps:
-      # Checkout do repositório
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Setup do Node.js (para Playwright + TS + lint)
+      # 1. Python para rodar init_db.py
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-dotenv mysql-connector-python
+
+      # 2. Node.js para seus testes
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
 
-      # Espera extra, garantindo tempo para que MySQL + init.sql finalizem
-      - name: Wait extra for MySQL init
-        run: sleep 20
+      - run: npm ci
 
-      # Instalar dependências do projeto
-      - name: Install dependencies
-        run: npm ci
+      # 3. Popular o banco usando script Python
+      - name: Initialize database
+        run: python init_db.py
+        env:
+          DB_HOST: 127.0.0.1
+          DB_USER: testuser
+          DB_PASSWORD: testpassword
+          DB_NAME: testdb
+          DB_PORT: 3306
 
-      # Rodar lint + prettier + type-check
-      - name: Run quality checks
-        run: npm run quality
+      # 4. Checks de qualidade + testes
+      - run: npm run quality
 
-      # Rodar testes com Playwright em modo headless (CI)
-      - name: Run Playwright tests
-        run: npm run test:ci
+      - run: npm run test:ci
 
-      # Upload do relatório do Playwright mesmo se falhar
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
