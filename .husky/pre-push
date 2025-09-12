@@ -1,0 +1,11 @@
+echo "🚀 Executando pre-push hooks..."
+
+# Testes Playwright
+echo "🎭 Rodando testes do Playwright (modo CI)..."
+npm run test:ci
+if [ $? -ne 0 ]; then
+  echo "❌ Testes do Playwright falharam. Push bloqueado."
+  exit 1
+fi
+
+echo "✅ Todos os testes passaram! Push liberado."
