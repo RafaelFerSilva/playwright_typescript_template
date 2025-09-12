@@ -21,33 +21,42 @@ jobs:
           MYSQL_USER: testuser
           MYSQL_PASSWORD: testpassword
         options: >-
-          --health-cmd="mysqladmin ping --host=localhost --user=root --password=rootpassword"
+          --health-cmd="mysqladmin ping --protocol=tcp --user=root --password=rootpassword"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=10
+          --health-retries=15
         volumes:
-          # monta script de inicialização direto no container
           - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
     steps:
+      # Checkout do repositório
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Setup do Node.js (para Playwright + TS + lint)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
 
+      # Espera extra, garantindo tempo para que MySQL + init.sql finalizem
+      - name: Wait extra for MySQL init
+        run: sleep 20
+
+      # Instalar dependências do projeto
       - name: Install dependencies
         run: npm ci
 
-      - name: Run quality checks (lint + prettier + type-check)
+      # Rodar lint + prettier + type-check
+      - name: Run quality checks
         run: npm run quality
 
+      # Rodar testes com Playwright em modo headless (CI)
       - name: Run Playwright tests
         run: npm run test:ci
 
+      # Upload do relatório do Playwright mesmo se falhar
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
