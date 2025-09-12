@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 echo "🚀 Executando pre-commit hooks..."
 
 # 1. Rodar lint-staged (ESLint + Prettier nos arquivos staged)
