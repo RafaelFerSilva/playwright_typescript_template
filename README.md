@@ -8,6 +8,19 @@ Compartilho aqui os passos dessa evolução — desde um setup inicial até a co
 
 Ao final temos uma explicação detalhada sobre cada componente e sua função no template. O template abrange Screenplay e Page Object Model, o objetivo e deixar a cargo do time escolher qual padrão seguir.
 
+## Execução do template
+
+Para executar o template, siga os passos descritos abaixo:
+
+1. Clone o repositório para sua máquina local.
+2. Instale as dependências executando `npm install`.
+3. Altere o nome do arquivo uat.example.env para uat.env (variaveis de ambiente)
+4. Execute os testes com o comando `npm run test`.
+
+---
+
+# Contrução do Framework - Passo a passo.
+
 ## Inicializar um projeto
 
 - Vamos iniciar criando uma pasta para nosso projeto.
