@@ -97,10 +97,21 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:ci
 
-      # 6. Upload do report sempre (mesmo se falhar)
-      - name: Upload Playwright report
+      # Gerar relatório HTML do Allure
+      - name: Generate Allure Report
+        run: npm run allure:generate
+
+      # Publicar resultados do Allure
+      - name: Upload Allure Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: allure-results
+          path: allure-results/
+
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
