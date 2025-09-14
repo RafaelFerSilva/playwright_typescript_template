@@ -15,7 +15,9 @@ Para executar o template, siga os passos descritos abaixo:
 1. Clone o repositório para sua máquina local.
 2. Instale as dependências executando `npm install`.
 3. Altere o nome do arquivo uat.example.env para uat.env (variaveis de ambiente)
-4. Execute os testes com o comando `npm run test`.
+4. Suba o banco de dados para configurar as tabelas necessárias para executar os testes de exemplos `docker compose up -d`.
+5. Execute o script para gerar as tabelas necessárias no banco de dados `python init_db.py`
+6. Execute os testes com o comando `npm run test`.
 
 ---
 
